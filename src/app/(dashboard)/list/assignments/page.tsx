@@ -1,19 +1,19 @@
+export const dynamic = "force-dynamic";
+
 import FormModal from "@/components/FormModal";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
-import {
-  assignmentsData,
-  role,
-} from "@/lib/data";
+import { role } from "@/lib/data";
+import prisma from "@/lib/prisma";
 import Image from "next/image";
 
 type Assignment = {
   id: number;
-  subject: string;
-  class: string;
-  teacher: string;
-  dueDate: string;
+  subject: { name: string };
+  class: { name: string };
+  teacher: { name: string };
+  dueDate: Date;
 };
 
 const columns = [
@@ -41,19 +41,27 @@ const columns = [
   },
 ];
 
-const AssignmentListPage = () => {
+const AssignmentListPage = async () => {
+  const assignmentsData = await prisma.assignment.findMany({
+    include: {
+      subject: { select: { name: true } },
+      class: { select: { name: true } },
+      teacher: { select: { name: true } },
+    },
+  });
+
   const renderRow = (item: Assignment) => (
     <tr
       key={item.id}
       className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-lamaPurpleLight"
     >
-      <td className="flex items-center gap-4 p-4">{item.subject}</td>
-      <td>{item.class}</td>
-      <td className="hidden md:table-cell">{item.teacher}</td>
-      <td className="hidden md:table-cell">{item.dueDate}</td>
+      <td className="flex items-center gap-4 p-4">{item.subject.name}</td>
+      <td>{item.class.name}</td>
+      <td className="hidden md:table-cell">{item.teacher.name}</td>
+      <td className="hidden md:table-cell">{item.dueDate.toLocaleDateString("es-MX")}</td>
       <td>
         <div className="flex items-center gap-2">
-          {role === "admin" || role === "teacher" && (
+          {(role === "admin" || role === "teacher") && (
             <>
               <FormModal table="assignment" type="update" data={item} />
               <FormModal table="assignment" type="delete" id={item.id} />
@@ -80,7 +88,7 @@ const AssignmentListPage = () => {
             <button className="w-8 h-8 flex items-center justify-center rounded-full bg-lamaYellow">
               <Image src="/sort.png" alt="" width={14} height={14} />
             </button>
-            {role === "admin" || role === "teacher" && <FormModal table="assignment" type="create" />}
+            {(role === "admin" || role === "teacher") && <FormModal table="assignment" type="create" />}
           </div>
         </div>
       </div>

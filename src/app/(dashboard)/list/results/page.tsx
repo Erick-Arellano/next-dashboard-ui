@@ -1,21 +1,20 @@
+export const dynamic = "force-dynamic";
+
 import FormModal from "@/components/FormModal";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
-import {
-  resultsData,
-  role,
-} from "@/lib/data";
+import { role } from "@/lib/data";
+import prisma from "@/lib/prisma";
 import Image from "next/image";
 
 type Result = {
   id: number;
-  subject: string;
-  class: string;
-  teacher: string;
-  student: string;
-  type: "exam" | "assignment";
-  date: string;
+  subject: { name: string };
+  class: { name: string };
+  teacher: { name: string };
+  student: { name: string };
+  date: Date;
   score: number;
 };
 
@@ -54,21 +53,30 @@ const columns = [
   },
 ];
 
-const ResultListPage = () => {
+const ResultListPage = async () => {
+  const resultsData = await prisma.result.findMany({
+    include: {
+      subject: { select: { name: true } },
+      student: { select: { name: true } },
+      class: { select: { name: true } },
+      teacher: { select: { name: true } },
+    },
+  });
+
   const renderRow = (item: Result) => (
     <tr
       key={item.id}
       className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-lamaPurpleLight"
     >
-      <td className="flex items-center gap-4 p-4">{item.subject}</td>
-      <td>{item.student}</td>
+      <td className="flex items-center gap-4 p-4">{item.subject.name}</td>
+      <td>{item.student.name}</td>
       <td className="hidden md:table-cell">{item.score}</td>
-      <td className="hidden md:table-cell">{item.teacher}</td>
-      <td className="hidden md:table-cell">{item.class}</td>
-      <td className="hidden md:table-cell">{item.date}</td>
+      <td className="hidden md:table-cell">{item.teacher.name}</td>
+      <td className="hidden md:table-cell">{item.class.name}</td>
+      <td className="hidden md:table-cell">{item.date.toLocaleDateString("es-MX")}</td>
       <td>
         <div className="flex items-center gap-2">
-          {role === "admin" || role === "teacher" && (
+          {(role === "admin" || role === "teacher") && (
             <>
               <FormModal table="result" type="update" data={item} />
               <FormModal table="result" type="delete" id={item.id} />
@@ -93,7 +101,7 @@ const ResultListPage = () => {
             <button className="w-8 h-8 flex items-center justify-center rounded-full bg-lamaYellow">
               <Image src="/sort.png" alt="" width={14} height={14} />
             </button>
-            {role === "admin" || role === "teacher" && <FormModal table="result" type="create" />}
+            {(role === "admin" || role === "teacher") && <FormModal table="result" type="create" />}
           </div>
         </div>
       </div>

@@ -30,12 +30,14 @@ const cardStyles: { [key: string]: { bg: string; text: string; tagBg: string } }
   },
 };
 
-const UserCard = ({ type }: { type: string }) => {
+const UserCard = ({ type, count }: { type: string; count?: number }) => {
   const style = cardStyles[type] || {
     bg: "bg-white border border-gray-100 shadow-sm",
     text: "text-gray-800",
     tagBg: "bg-gray-100 text-gray-600",
   };
+
+  const displayCount = count !== undefined ? count.toLocaleString() : "1,234";
 
   return (
     <div className={`rounded-2xl p-4 flex-1 min-w-[130px] transition-all duration-300 hover:scale-[1.03] hover:shadow-lg ${style.bg}`}>
@@ -45,7 +47,7 @@ const UserCard = ({ type }: { type: string }) => {
         </span>
         <Image src="/more.png" alt="" width={20} height={20} className="opacity-90 brightness-200" />
       </div>
-      <h1 className={`text-2xl font-bold my-4 ${style.text}`}>1,234</h1>
+      <h1 className={`text-2xl font-bold my-4 ${style.text}`}>{displayCount}</h1>
       <h2 className={`capitalize text-xs font-semibold ${style.text} opacity-90`}>{labels[type] || type}</h2>
     </div>
   );

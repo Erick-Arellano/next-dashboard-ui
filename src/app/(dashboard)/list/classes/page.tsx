@@ -1,16 +1,21 @@
-﻿import FormModal from "@/components/FormModal";
+export const dynamic = "force-dynamic";
+
+import FormModal from "@/components/FormModal";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
-import { classesData, role } from "@/lib/data";
+import { role } from "@/lib/data";
+import prisma from "@/lib/prisma";
 import Image from "next/image";
 
 type Class = {
-  id: number;
+  id: string;
   name: string;
   capacity: number;
   grade: number;
-  supervisor: string;
+  supervisor?: {
+    name: string;
+  } | null;
 };
 
 const columns = [
@@ -39,7 +44,17 @@ const columns = [
   },
 ];
 
-const ClassListPage = () => {
+const ClassListPage = async () => {
+  const classesData = await prisma.class.findMany({
+    include: {
+      supervisor: {
+        select: {
+          name: true,
+        },
+      },
+    },
+  });
+
   const renderRow = (item: Class) => (
     <tr
       key={item.id}
@@ -48,7 +63,7 @@ const ClassListPage = () => {
       <td className="flex items-center gap-4 p-4">{item.name}</td>
       <td className="hidden md:table-cell">{item.capacity}</td>
       <td className="hidden md:table-cell">{item.grade}</td>
-      <td className="hidden md:table-cell">{item.supervisor}</td>
+      <td className="hidden md:table-cell">{item.supervisor?.name || "-"}</td>
       <td>
         <div className="flex items-center gap-2">
           {role === "admin" && (
