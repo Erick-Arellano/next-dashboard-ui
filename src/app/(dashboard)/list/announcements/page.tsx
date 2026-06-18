@@ -14,20 +14,20 @@ type Announcement = {
 
 const columns = [
   {
-    header: "Title",
+    header: "Título",
     accessor: "title",
   },
   {
-    header: "Class",
+    header: "Grupo",
     accessor: "class",
   },
   {
-    header: "Date",
+    header: "Fecha",
     accessor: "date",
     className: "hidden md:table-cell",
   },
   {
-    header: "Actions",
+    header: "Acciones",
     accessor: "action",
   },
 ];
@@ -59,7 +59,7 @@ const AnnouncementListPage = () => {
       {/* TOP */}
       <div className="flex items-center justify-between">
         <h1 className="hidden md:block text-lg font-semibold">
-          All Announcements
+          Todos los Anuncios
         </h1>
         <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
           <TableSearch />

@@ -14,12 +14,16 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       colors: {
-        lamaSky: "#C3EBFA",
-        lamaSkyLight: "#EDF9FD",
-        lamaPurple: "#CFCEFF",
-        lamaPurpleLight: "#F1F0FF",
-        lamaYellow: "#FAE27C",
-        lamaYellowLight: "#FEFCE8",
+        lamaSky: "#D0E8FF",          // Light pastel Blue matching Vocali Blue
+        lamaSkyLight: "#F0F6FC",     // Very light Blue
+        lamaPurple: "#FFE6D5",       // Light pastel Peach/Orange matching Vocali Orange
+        lamaPurpleLight: "#FFF5EE",  // Very light Orange/Peach
+        lamaYellow: "#FAE27C",       // Soft Yellow
+        lamaYellowLight: "#FEFCE8",  // Very light Yellow
+        vocaliBlue: "#1872D9",       // Vocali Brand Primary Blue
+        vocaliBlueLight: "#EBF3FC",  // Vocali Brand Light Blue
+        vocaliOrange: "#F47A20",     // Vocali Brand Primary Orange
+        vocaliOrangeLight: "#FFF3EB",// Vocali Brand Light Orange
       },
     },
   },

@@ -1,0 +1,157 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/client"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Teacher {
+  id              String           @id
+  name            String
+  email           String?          @unique
+  phone           String?
+  photo           String?
+  address         String?
+  subjects        Subject[]        @relation("TeacherSubjects")
+  classes         Class[]          @relation("TeacherClasses")
+  lessons         Lesson[]
+  exams           Exam[]
+  assignments     Assignment[]
+  results         Result[]
+  teacherPayments TeacherPayment[]
+}
+
+model Student {
+  id       String   @id
+  name     String
+  email    String?  @unique
+  phone    String?
+  photo    String?
+  address  String?
+  grade    Int
+  classId  String?
+  class    Class?   @relation(fields: [classId], references: [id])
+  payments Payment[]
+  results  Result[]
+}
+
+model Subject {
+  id          Int          @id @default(autoincrement())
+  name        String       @unique
+  teachers    Teacher[]    @relation("TeacherSubjects")
+  lessons     Lesson[]
+  exams       Exam[]
+  assignments Assignment[]
+  results     Result[]
+}
+
+model Class {
+  id           String       @id
+  name         String       @unique
+  capacity     Int
+  grade        Int
+  supervisorId String?
+  supervisor   Teacher?     @relation("TeacherClasses", fields: [supervisorId], references: [id])
+  students     Student[]
+  lessons      Lesson[]
+  exams        Exam[]
+  assignments  Assignment[]
+  results      Result[]
+}
+
+model Lesson {
+  id        Int     @id @default(autoincrement())
+  subjectId Int
+  subject   Subject @relation(fields: [subjectId], references: [id])
+  classId   String
+  class     Class   @relation(fields: [classId], references: [id])
+  teacherId String
+  teacher   Teacher @relation(fields: [teacherId], references: [id])
+}
+
+model Exam {
+  id        Int      @id @default(autoincrement())
+  subjectId Int
+  subject   Subject  @relation(fields: [subjectId], references: [id])
+  classId   String
+  class     Class    @relation(fields: [classId], references: [id])
+  teacherId String
+  teacher   Teacher  @relation(fields: [teacherId], references: [id])
+  date      DateTime
+  results   Result[]
+}
+
+model Assignment {
+  id        Int      @id @default(autoincrement())
+  subjectId Int
+  subject   Subject  @relation(fields: [subjectId], references: [id])
+  classId   String
+  class     Class    @relation(fields: [classId], references: [id])
+  teacherId String
+  teacher   Teacher  @relation(fields: [teacherId], references: [id])
+  dueDate   DateTime
+  results   Result[]
+}
+
+model Result {
+  id           Int         @id @default(autoincrement())
+  subjectId    Int
+  subject      Subject     @relation(fields: [subjectId], references: [id])
+  studentId    String
+  student      Student     @relation(fields: [studentId], references: [id])
+  score        Int
+  teacherId    String
+  teacher      Teacher     @relation(fields: [teacherId], references: [id])
+  classId      String
+  class        Class       @relation(fields: [classId], references: [id])
+  date         DateTime
+  examId       Int?
+  exam         Exam?       @relation(fields: [examId], references: [id])
+  assignmentId Int?
+  assignment   Assignment? @relation(fields: [assignmentId], references: [id])
+}
+
+model Event {
+  id        Int      @id @default(autoincrement())
+  title     String
+  classId   String?
+  date      DateTime
+  startTime String
+  endTime   String
+}
+
+model Announcement {
+  id      Int      @id @default(autoincrement())
+  title   String
+  classId String?
+  date    DateTime
+}
+
+model Payment {
+  id          Int       @id @default(autoincrement())
+  studentId   String
+  student     Student   @relation(fields: [studentId], references: [id])
+  amount      Float
+  type        String    // "Mensual", "Por horas", "Curso completo"
+  status      String    // "Pagado", "Pendiente", "Atrasado"
+  dueDate     DateTime
+  paymentDate DateTime?
+  method      String?
+}
+
+model TeacherPayment {
+  id          Int       @id @default(autoincrement())
+  teacherId   String
+  teacher     Teacher   @relation(fields: [teacherId], references: [id])
+  amount      Float
+  type        String    // "Pago por Horas", "Sueldo Fijo"
+  hours       Int
+  status      String    // "Pagado", "Pendiente"
+  paymentDate DateTime?
+  method      String?
+}

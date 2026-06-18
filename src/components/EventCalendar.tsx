@@ -13,21 +13,21 @@ type Value = ValuePiece | [ValuePiece, ValuePiece];
 const events = [
   {
     id: 1,
-    title: "Lorem ipsum dolor",
+    title: "Club de Conversación",
     time: "12:00 PM - 2:00 PM",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    description: "Taller grupal para practicar fluidez e inglés conversacional.",
   },
   {
     id: 2,
-    title: "Lorem ipsum dolor",
-    time: "12:00 PM - 2:00 PM",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    title: "Examen de Ubicación",
+    time: "4:00 PM - 6:00 PM",
+    description: "Pruebas de nivelación de idiomas para nuevos ingresos.",
   },
   {
     id: 3,
-    title: "Lorem ipsum dolor",
-    time: "12:00 PM - 2:00 PM",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    title: "Taller de Pronunciación",
+    time: "7:00 PM - 8:30 PM",
+    description: "Clase magistral para mejorar fonética y acentuación.",
   },
 ];
 
@@ -36,9 +36,9 @@ const EventCalendar = () => {
 
   return (
     <div className="bg-white p-4 rounded-md">
-      <Calendar onChange={onChange} value={value} />
+      <Calendar onChange={onChange} value={value} locale="es-ES" />
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold my-4">Events</h1>
+        <h1 className="text-xl font-semibold my-4">Eventos</h1>
         <Image src="/moreDark.png" alt="" width={20} height={20} />
       </div>
       <div className="flex flex-col gap-4">

@@ -14,7 +14,7 @@ import {
 
 const data = [
   {
-    name: "Jan",
+    name: "Ene",
     income: 4000,
     expense: 2400,
   },
@@ -29,7 +29,7 @@ const data = [
     expense: 9800,
   },
   {
-    name: "Apr",
+    name: "Abr",
     income: 2780,
     expense: 3908,
   },
@@ -49,7 +49,7 @@ const data = [
     expense: 4300,
   },
   {
-    name: "Aug",
+    name: "Ago",
     income: 3490,
     expense: 4300,
   },
@@ -69,7 +69,7 @@ const data = [
     expense: 4300,
   },
   {
-    name: "Dec",
+    name: "Dic",
     income: 3490,
     expense: 4300,
   },
@@ -79,7 +79,7 @@ const FinanceChart = () => {
   return (
     <div className="bg-white rounded-xl w-full h-full p-4">
       <div className="flex justify-between items-center">
-        <h1 className="text-lg font-semibold">Finance</h1>
+        <h1 className="text-lg font-semibold">Finanzas</h1>
         <Image src="/moreDark.png" alt="" width={20} height={20} />
       </div>
       <ResponsiveContainer width="100%" height="90%">
@@ -112,10 +112,17 @@ const FinanceChart = () => {
           <Line
             type="monotone"
             dataKey="income"
-            stroke="#C3EBFA"
+            name="Ingresos"
+            stroke="#1872D9" // Vocali Blue
             strokeWidth={5}
           />
-          <Line type="monotone" dataKey="expense" stroke="#CFCEFF" strokeWidth={5}/>
+          <Line 
+            type="monotone" 
+            dataKey="expense" 
+            name="Gastos"
+            stroke="#F47A20" // Vocali Orange
+            strokeWidth={5}
+          />
         </LineChart>
       </ResponsiveContainer>
     </div>

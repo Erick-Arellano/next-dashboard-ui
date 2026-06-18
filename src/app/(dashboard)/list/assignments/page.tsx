@@ -18,25 +18,25 @@ type Assignment = {
 
 const columns = [
   {
-    header: "Subject Name",
+    header: "Curso",
     accessor: "name",
   },
   {
-    header: "Class",
+    header: "Grupo",
     accessor: "class",
   },
   {
-    header: "Teacher",
+    header: "Profesor",
     accessor: "teacher",
     className: "hidden md:table-cell",
   },
   {
-    header: "Due Date",
+    header: "Fecha Límite",
     accessor: "dueDate",
     className: "hidden md:table-cell",
   },
   {
-    header: "Actions",
+    header: "Acciones",
     accessor: "action",
   },
 ];
@@ -69,7 +69,7 @@ const AssignmentListPage = () => {
       {/* TOP */}
       <div className="flex items-center justify-between">
         <h1 className="hidden md:block text-lg font-semibold">
-          All Assignments
+          Todas las Tareas
         </h1>
         <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
           <TableSearch />
