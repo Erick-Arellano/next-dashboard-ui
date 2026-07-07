@@ -70,7 +70,7 @@
   font-size: 14px !important;
 }
 
-.rbc-event {
+.rbc-time-view .rbc-event {
   border: none !important;
   color: black !important;
   padding: 10px !important;
@@ -78,32 +78,77 @@
   width: 99% !important;
 }
 
-.rbc-event:nth-child(1) {
+.rbc-time-view .rbc-event:nth-child(1) {
   background-color: #EBF3FC !important;
 }
-.rbc-event:nth-child(2) {
+.rbc-time-view .rbc-event:nth-child(2) {
   background-color: #FFF3EB !important;
 }
-.rbc-event:nth-child(3) {
+.rbc-time-view .rbc-event:nth-child(3) {
   background-color: #FEF3C7 !important;
 }
-.rbc-event:nth-child(4) {
+.rbc-time-view .rbc-event:nth-child(4) {
   background-color: #EAFDF5 !important;
 }
-.rbc-event:nth-child(5) {
+.rbc-time-view .rbc-event:nth-child(5) {
   background-color: #EBF3FC !important;
 }
-.rbc-event:nth-child(6) {
+.rbc-time-view .rbc-event:nth-child(6) {
   background-color: #FFF3EB !important;
 }
-.rbc-event:nth-child(7) {
+.rbc-time-view .rbc-event:nth-child(7) {
   background-color: #FEF3C7 !important;
 }
-.rbc-event:nth-child(8) {
+.rbc-time-view .rbc-event:nth-child(8) {
   background-color: #EAFDF5 !important;
 }
 
-.rbc-event-label{
+.rbc-time-view .rbc-event-label{
   color: gray !important;
   margin-bottom: 5px;
+}
+
+/* PRINT OPTIMIZATION RULES */
+@media print {
+  /* Force background colors and images to print */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Hides default browser header and footer */
+  @page {
+    margin: 0 !important;
+  }
+  
+  body {
+    background-color: white !important;
+    color: black !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Force layout container to expand */
+  div.h-screen {
+    height: auto !important;
+    display: block !important;
+    overflow: visible !important;
+  }
+
+  /* Hide left sidebar container */
+  div.h-screen > div:first-child {
+    display: none !important;
+  }
+
+  /* Expand main content panel to 100% width */
+  div.h-screen > div:last-child {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background-color: white !important;
+    overflow: visible !important;
+    display: block !important;
+    height: auto !important;
+  }
 }

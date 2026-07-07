@@ -5,24 +5,22 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import InputField from "../InputField";
 import Image from "next/image";
+import { useState } from "react";
+import { createStudent, updateStudent } from "@/lib/actions";
 
 const schema = z.object({
-  username: z
-    .string()
-    .min(3, { message: "Username must be at least 3 characters long!" })
-    .max(20, { message: "Username must be at most 20 characters long!" }),
-  email: z.string().email({ message: "Invalid email address!" }),
-  password: z
-    .string()
-    .min(8, { message: "Password must be at least 8 characters long!" }),
-  firstName: z.string().min(1, { message: "First name is required!" }),
-  lastName: z.string().min(1, { message: "Last name is required!" }),
-  phone: z.string().min(1, { message: "Phone is required!" }),
-  address: z.string().min(1, { message: "Address is required!" }),
-  bloodType: z.string().min(1, { message: "Blood Type is required!" }),
-  birthday: z.date({ message: "Birthday is required!" }),
-  sex: z.enum(["male", "female"], { message: "Sex is required!" }),
-  img: z.instanceof(File, { message: "Image is required" }),
+  username: z.string().optional().or(z.literal("")),
+  email: z.string().email({ message: "¡Dirección de correo electrónico inválida!" }),
+  password: z.string().optional().or(z.literal("")),
+  firstName: z.string().min(1, { message: "¡El nombre es obligatorio!" }),
+  lastName: z.string().min(1, { message: "¡El apellido es obligatorio!" }),
+  phone: z.string().min(1, { message: "¡El teléfono es obligatorio!" }),
+  address: z.string().optional(),
+  classId: z.string().min(1, { message: "¡El grupo es obligatorio!" }),
+  grade: z.coerce.number().min(1, { message: "¡El nivel es obligatorio!" }),
+  birthday: z.coerce.date().optional(),
+  sex: z.enum(["male", "female"]).optional(),
+  img: z.any(),
 });
 
 type Inputs = z.infer<typeof schema>;
@@ -30,9 +28,11 @@ type Inputs = z.infer<typeof schema>;
 const StudentForm = ({
   type,
   data,
+  onClose,
 }: {
   type: "create" | "update";
   data?: any;
+  onClose?: () => void;
 }) => {
   const {
     register,
@@ -42,96 +42,221 @@ const StudentForm = ({
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = handleSubmit((data) => {
-    console.log(data);
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+
+  // Split name into first and last names if it comes merged as a single name string
+  const parsedData = { ...data };
+  if (data && data.name && !data.firstName) {
+    const parts = data.name.trim().split(/\s+/);
+    parsedData.firstName = parts[0] || "";
+    parsedData.lastName = parts.slice(1).join(" ") || "";
+  }
+
+  const onSubmit = handleSubmit(async (values) => {
+    setLoading(true);
+    setErrorMsg("");
+    try {
+      // 1. Upload photo if selected
+      let photoUrl = data?.img || "/avatar.png";
+      if (values.img && values.img[0]) {
+        const formData = new FormData();
+        formData.append("file", values.img[0]);
+        const uploadRes = await fetch("/api/upload", {
+          method: "POST",
+          body: formData,
+        });
+        if (uploadRes.ok) {
+          const uploadData = await uploadRes.json();
+          if (uploadData.success) {
+            photoUrl = uploadData.url;
+          } else {
+            setErrorMsg(uploadData.error || "Error al subir la fotografía.");
+            setLoading(false);
+            return;
+          }
+        } else {
+          setErrorMsg("Error de red al subir la fotografía.");
+          setLoading(false);
+          return;
+        }
+      }
+
+      // 2. Execute Action
+      const { username, email, firstName, lastName, phone, address, classId, grade } = values;
+
+      if (type === "create") {
+        const result = await createStudent({
+          username: username || "",
+          email,
+          firstName,
+          lastName,
+          phone,
+          address,
+          photo: photoUrl,
+          classId,
+          grade,
+        });
+        if (result.success) {
+          onClose?.();
+        } else {
+          setErrorMsg(result.error || "Algo salió mal al registrar al alumno.");
+        }
+      } else {
+        const result = await updateStudent({
+          id: data.id,
+          username: username || "",
+          email,
+          firstName,
+          lastName,
+          phone,
+          address,
+          photo: photoUrl,
+          classId,
+          grade,
+        });
+        if (result.success) {
+          onClose?.();
+        } else {
+          setErrorMsg(result.error || "Algo salió mal al actualizar al alumno.");
+        }
+      }
+    } catch (err: any) {
+      console.error(err);
+      setErrorMsg("Ocurrió un error inesperado.");
+    } finally {
+      setLoading(false);
+    }
   });
 
   return (
     <form className="flex flex-col gap-8" onSubmit={onSubmit}>
-      <h1 className="text-xl font-semibold">Create a new student</h1>
+      <h1 className="text-xl font-semibold">
+        {type === "create" ? "Crear un nuevo alumno" : "Actualizar información del alumno"}
+      </h1>
       <span className="text-xs text-gray-400 font-medium">
-        Authentication Information
+        Información de Autenticación
       </span>
       <div className="flex justify-between flex-wrap gap-4">
         <InputField
-          label="Username"
+          label="Nombre de usuario"
           name="username"
-          defaultValue={data?.username}
+          defaultValue={parsedData?.username}
           register={register}
           error={errors?.username}
         />
         <InputField
-          label="Email"
+          label="Correo electrónico"
           name="email"
-          defaultValue={data?.email}
+          defaultValue={parsedData?.email}
           register={register}
           error={errors?.email}
         />
         <InputField
-          label="Password"
+          label="Contraseña"
           name="password"
           type="password"
-          defaultValue={data?.password}
+          defaultValue={parsedData?.password}
           register={register}
           error={errors?.password}
         />
       </div>
       <span className="text-xs text-gray-400 font-medium">
-        Personal Information
+        Información Personal
       </span>
       <div className="flex justify-between flex-wrap gap-4">
         <InputField
-          label="First Name"
+          label="Nombre"
           name="firstName"
-          defaultValue={data?.firstName}
+          defaultValue={parsedData?.firstName}
           register={register}
           error={errors.firstName}
         />
         <InputField
-          label="Last Name"
+          label="Apellido"
           name="lastName"
-          defaultValue={data?.lastName}
+          defaultValue={parsedData?.lastName}
           register={register}
           error={errors.lastName}
         />
         <InputField
-          label="Phone"
+          label="Teléfono"
           name="phone"
-          defaultValue={data?.phone}
+          defaultValue={parsedData?.phone}
           register={register}
           error={errors.phone}
         />
         <InputField
-          label="Address"
+          label="Dirección (Opcional)"
           name="address"
-          defaultValue={data?.address}
+          defaultValue={parsedData?.address}
           register={register}
           error={errors.address}
         />
+        <div className="flex flex-col gap-2 w-full md:w-1/4">
+          <label className="text-xs text-gray-500">Grupo</label>
+          <select
+            className="ring-[1.5px] ring-gray-300 p-2 rounded-md text-sm w-full font-sans bg-white"
+            {...register("classId")}
+            defaultValue={parsedData?.classId}
+          >
+            <option value="">Selecciona...</option>
+            <option value="1A">1A</option>
+            <option value="2B">2B</option>
+            <option value="3C">3C</option>
+            <option value="4B">4B</option>
+            <option value="5A">5A</option>
+            <option value="5B">5B</option>
+            <option value="6B">6B</option>
+            <option value="6C">6C</option>
+            <option value="6D">6D</option>
+            <option value="7A">7A</option>
+          </select>
+          {errors.classId?.message && (
+            <p className="text-xs text-red-400">
+              {errors.classId.message.toString()}
+            </p>
+          )}
+        </div>
+        <div className="flex flex-col gap-2 w-full md:w-1/4">
+          <label className="text-xs text-gray-500">Nivel Escolar</label>
+          <select
+            className="ring-[1.5px] ring-gray-300 p-2 rounded-md text-sm w-full font-sans bg-white"
+            {...register("grade")}
+            defaultValue={parsedData?.grade}
+          >
+            <option value="">Selecciona...</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+          </select>
+          {errors.grade?.message && (
+            <p className="text-xs text-red-400">
+              {errors.grade.message.toString()}
+            </p>
+          )}
+        </div>
         <InputField
-          label="Blood Type"
-          name="bloodType"
-          defaultValue={data?.bloodType}
-          register={register}
-          error={errors.bloodType}
-        />
-        <InputField
-          label="Birthday"
+          label="Fecha de nacimiento"
           name="birthday"
-          defaultValue={data?.birthday}
+          defaultValue={parsedData?.birthday}
           register={register}
           error={errors.birthday}
           type="date"
         />
         <div className="flex flex-col gap-2 w-full md:w-1/4">
-          <label className="text-xs text-gray-500">Sex</label>
+          <label className="text-xs text-gray-500">Sexo</label>
           <select
-            className="ring-[1.5px] ring-gray-300 p-2 rounded-md text-sm w-full"
+            className="ring-[1.5px] ring-gray-300 p-2 rounded-md text-sm w-full font-sans bg-white"
             {...register("sex")}
-            defaultValue={data?.sex}
+            defaultValue={parsedData?.sex}
           >
-            <option value="male">Male</option>
-            <option value="female">Female</option>
+            <option value="male">Masculino</option>
+            <option value="female">Femenino</option>
           </select>
           {errors.sex?.message && (
             <p className="text-xs text-red-400">
@@ -145,7 +270,7 @@ const StudentForm = ({
             htmlFor="img"
           >
             <Image src="/upload.png" alt="" width={28} height={28} />
-            <span>Upload a photo</span>
+            <span>Subir una foto</span>
           </label>
           <input type="file" id="img" {...register("img")} className="hidden" />
           {errors.img?.message && (
@@ -155,8 +280,14 @@ const StudentForm = ({
           )}
         </div>
       </div>
-      <button className="bg-blue-400 text-white p-2 rounded-md">
-        {type === "create" ? "Create" : "Update"}
+      {errorMsg && (
+        <p className="text-xs text-red-500 font-medium text-center">{errorMsg}</p>
+      )}
+      <button 
+        disabled={loading} 
+        className="bg-blue-400 hover:bg-blue-500 disabled:bg-blue-300 text-white p-2 rounded-md transition-all duration-200"
+      >
+        {loading ? (type === "create" ? "Creando..." : "Guardando...") : (type === "create" ? "Crear" : "Guardar Cambios")}
       </button>
     </form>
   );

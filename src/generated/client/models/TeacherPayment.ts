@@ -244,11 +244,12 @@ export type TeacherPaymentWhereInput = {
   teacherId?: Prisma.StringFilter<"TeacherPayment"> | string
   amount?: Prisma.FloatFilter<"TeacherPayment"> | number
   type?: Prisma.StringFilter<"TeacherPayment"> | string
-  hours?: Prisma.IntFilter<"TeacherPayment"> | number
+  hours?: Prisma.FloatFilter<"TeacherPayment"> | number
   status?: Prisma.StringFilter<"TeacherPayment"> | string
   paymentDate?: Prisma.DateTimeNullableFilter<"TeacherPayment"> | Date | string | null
   method?: Prisma.StringNullableFilter<"TeacherPayment"> | string | null
   teacher?: Prisma.XOR<Prisma.TeacherScalarRelationFilter, Prisma.TeacherWhereInput>
+  transaction?: Prisma.XOR<Prisma.TransactionNullableScalarRelationFilter, Prisma.TransactionWhereInput> | null
 }
 
 export type TeacherPaymentOrderByWithRelationInput = {
@@ -261,6 +262,7 @@ export type TeacherPaymentOrderByWithRelationInput = {
   paymentDate?: Prisma.SortOrderInput | Prisma.SortOrder
   method?: Prisma.SortOrderInput | Prisma.SortOrder
   teacher?: Prisma.TeacherOrderByWithRelationInput
+  transaction?: Prisma.TransactionOrderByWithRelationInput
 }
 
 export type TeacherPaymentWhereUniqueInput = Prisma.AtLeast<{
@@ -271,11 +273,12 @@ export type TeacherPaymentWhereUniqueInput = Prisma.AtLeast<{
   teacherId?: Prisma.StringFilter<"TeacherPayment"> | string
   amount?: Prisma.FloatFilter<"TeacherPayment"> | number
   type?: Prisma.StringFilter<"TeacherPayment"> | string
-  hours?: Prisma.IntFilter<"TeacherPayment"> | number
+  hours?: Prisma.FloatFilter<"TeacherPayment"> | number
   status?: Prisma.StringFilter<"TeacherPayment"> | string
   paymentDate?: Prisma.DateTimeNullableFilter<"TeacherPayment"> | Date | string | null
   method?: Prisma.StringNullableFilter<"TeacherPayment"> | string | null
   teacher?: Prisma.XOR<Prisma.TeacherScalarRelationFilter, Prisma.TeacherWhereInput>
+  transaction?: Prisma.XOR<Prisma.TransactionNullableScalarRelationFilter, Prisma.TransactionWhereInput> | null
 }, "id">
 
 export type TeacherPaymentOrderByWithAggregationInput = {
@@ -302,7 +305,7 @@ export type TeacherPaymentScalarWhereWithAggregatesInput = {
   teacherId?: Prisma.StringWithAggregatesFilter<"TeacherPayment"> | string
   amount?: Prisma.FloatWithAggregatesFilter<"TeacherPayment"> | number
   type?: Prisma.StringWithAggregatesFilter<"TeacherPayment"> | string
-  hours?: Prisma.IntWithAggregatesFilter<"TeacherPayment"> | number
+  hours?: Prisma.FloatWithAggregatesFilter<"TeacherPayment"> | number
   status?: Prisma.StringWithAggregatesFilter<"TeacherPayment"> | string
   paymentDate?: Prisma.DateTimeNullableWithAggregatesFilter<"TeacherPayment"> | Date | string | null
   method?: Prisma.StringNullableWithAggregatesFilter<"TeacherPayment"> | string | null
@@ -316,6 +319,7 @@ export type TeacherPaymentCreateInput = {
   paymentDate?: Date | string | null
   method?: string | null
   teacher: Prisma.TeacherCreateNestedOneWithoutTeacherPaymentsInput
+  transaction?: Prisma.TransactionCreateNestedOneWithoutTeacherPaymentInput
 }
 
 export type TeacherPaymentUncheckedCreateInput = {
@@ -327,16 +331,18 @@ export type TeacherPaymentUncheckedCreateInput = {
   status: string
   paymentDate?: Date | string | null
   method?: string | null
+  transaction?: Prisma.TransactionUncheckedCreateNestedOneWithoutTeacherPaymentInput
 }
 
 export type TeacherPaymentUpdateInput = {
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  hours?: Prisma.IntFieldUpdateOperationsInput | number
+  hours?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   paymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   teacher?: Prisma.TeacherUpdateOneRequiredWithoutTeacherPaymentsNestedInput
+  transaction?: Prisma.TransactionUpdateOneWithoutTeacherPaymentNestedInput
 }
 
 export type TeacherPaymentUncheckedUpdateInput = {
@@ -344,10 +350,11 @@ export type TeacherPaymentUncheckedUpdateInput = {
   teacherId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  hours?: Prisma.IntFieldUpdateOperationsInput | number
+  hours?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   paymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transaction?: Prisma.TransactionUncheckedUpdateOneWithoutTeacherPaymentNestedInput
 }
 
 export type TeacherPaymentCreateManyInput = {
@@ -364,7 +371,7 @@ export type TeacherPaymentCreateManyInput = {
 export type TeacherPaymentUpdateManyMutationInput = {
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  hours?: Prisma.IntFieldUpdateOperationsInput | number
+  hours?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   paymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -375,7 +382,7 @@ export type TeacherPaymentUncheckedUpdateManyInput = {
   teacherId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  hours?: Prisma.IntFieldUpdateOperationsInput | number
+  hours?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   paymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -436,6 +443,11 @@ export type TeacherPaymentSumOrderByAggregateInput = {
   hours?: Prisma.SortOrder
 }
 
+export type TeacherPaymentNullableScalarRelationFilter = {
+  is?: Prisma.TeacherPaymentWhereInput | null
+  isNot?: Prisma.TeacherPaymentWhereInput | null
+}
+
 export type TeacherPaymentCreateNestedManyWithoutTeacherInput = {
   create?: Prisma.XOR<Prisma.TeacherPaymentCreateWithoutTeacherInput, Prisma.TeacherPaymentUncheckedCreateWithoutTeacherInput> | Prisma.TeacherPaymentCreateWithoutTeacherInput[] | Prisma.TeacherPaymentUncheckedCreateWithoutTeacherInput[]
   connectOrCreate?: Prisma.TeacherPaymentCreateOrConnectWithoutTeacherInput | Prisma.TeacherPaymentCreateOrConnectWithoutTeacherInput[]
@@ -478,6 +490,22 @@ export type TeacherPaymentUncheckedUpdateManyWithoutTeacherNestedInput = {
   deleteMany?: Prisma.TeacherPaymentScalarWhereInput | Prisma.TeacherPaymentScalarWhereInput[]
 }
 
+export type TeacherPaymentCreateNestedOneWithoutTransactionInput = {
+  create?: Prisma.XOR<Prisma.TeacherPaymentCreateWithoutTransactionInput, Prisma.TeacherPaymentUncheckedCreateWithoutTransactionInput>
+  connectOrCreate?: Prisma.TeacherPaymentCreateOrConnectWithoutTransactionInput
+  connect?: Prisma.TeacherPaymentWhereUniqueInput
+}
+
+export type TeacherPaymentUpdateOneWithoutTransactionNestedInput = {
+  create?: Prisma.XOR<Prisma.TeacherPaymentCreateWithoutTransactionInput, Prisma.TeacherPaymentUncheckedCreateWithoutTransactionInput>
+  connectOrCreate?: Prisma.TeacherPaymentCreateOrConnectWithoutTransactionInput
+  upsert?: Prisma.TeacherPaymentUpsertWithoutTransactionInput
+  disconnect?: Prisma.TeacherPaymentWhereInput | boolean
+  delete?: Prisma.TeacherPaymentWhereInput | boolean
+  connect?: Prisma.TeacherPaymentWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TeacherPaymentUpdateToOneWithWhereWithoutTransactionInput, Prisma.TeacherPaymentUpdateWithoutTransactionInput>, Prisma.TeacherPaymentUncheckedUpdateWithoutTransactionInput>
+}
+
 export type TeacherPaymentCreateWithoutTeacherInput = {
   amount: number
   type: string
@@ -485,6 +513,7 @@ export type TeacherPaymentCreateWithoutTeacherInput = {
   status: string
   paymentDate?: Date | string | null
   method?: string | null
+  transaction?: Prisma.TransactionCreateNestedOneWithoutTeacherPaymentInput
 }
 
 export type TeacherPaymentUncheckedCreateWithoutTeacherInput = {
@@ -495,6 +524,7 @@ export type TeacherPaymentUncheckedCreateWithoutTeacherInput = {
   status: string
   paymentDate?: Date | string | null
   method?: string | null
+  transaction?: Prisma.TransactionUncheckedCreateNestedOneWithoutTeacherPaymentInput
 }
 
 export type TeacherPaymentCreateOrConnectWithoutTeacherInput = {
@@ -530,10 +560,68 @@ export type TeacherPaymentScalarWhereInput = {
   teacherId?: Prisma.StringFilter<"TeacherPayment"> | string
   amount?: Prisma.FloatFilter<"TeacherPayment"> | number
   type?: Prisma.StringFilter<"TeacherPayment"> | string
-  hours?: Prisma.IntFilter<"TeacherPayment"> | number
+  hours?: Prisma.FloatFilter<"TeacherPayment"> | number
   status?: Prisma.StringFilter<"TeacherPayment"> | string
   paymentDate?: Prisma.DateTimeNullableFilter<"TeacherPayment"> | Date | string | null
   method?: Prisma.StringNullableFilter<"TeacherPayment"> | string | null
+}
+
+export type TeacherPaymentCreateWithoutTransactionInput = {
+  amount: number
+  type: string
+  hours: number
+  status: string
+  paymentDate?: Date | string | null
+  method?: string | null
+  teacher: Prisma.TeacherCreateNestedOneWithoutTeacherPaymentsInput
+}
+
+export type TeacherPaymentUncheckedCreateWithoutTransactionInput = {
+  id?: number
+  teacherId: string
+  amount: number
+  type: string
+  hours: number
+  status: string
+  paymentDate?: Date | string | null
+  method?: string | null
+}
+
+export type TeacherPaymentCreateOrConnectWithoutTransactionInput = {
+  where: Prisma.TeacherPaymentWhereUniqueInput
+  create: Prisma.XOR<Prisma.TeacherPaymentCreateWithoutTransactionInput, Prisma.TeacherPaymentUncheckedCreateWithoutTransactionInput>
+}
+
+export type TeacherPaymentUpsertWithoutTransactionInput = {
+  update: Prisma.XOR<Prisma.TeacherPaymentUpdateWithoutTransactionInput, Prisma.TeacherPaymentUncheckedUpdateWithoutTransactionInput>
+  create: Prisma.XOR<Prisma.TeacherPaymentCreateWithoutTransactionInput, Prisma.TeacherPaymentUncheckedCreateWithoutTransactionInput>
+  where?: Prisma.TeacherPaymentWhereInput
+}
+
+export type TeacherPaymentUpdateToOneWithWhereWithoutTransactionInput = {
+  where?: Prisma.TeacherPaymentWhereInput
+  data: Prisma.XOR<Prisma.TeacherPaymentUpdateWithoutTransactionInput, Prisma.TeacherPaymentUncheckedUpdateWithoutTransactionInput>
+}
+
+export type TeacherPaymentUpdateWithoutTransactionInput = {
+  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  hours?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teacher?: Prisma.TeacherUpdateOneRequiredWithoutTeacherPaymentsNestedInput
+}
+
+export type TeacherPaymentUncheckedUpdateWithoutTransactionInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  teacherId?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  hours?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TeacherPaymentCreateManyTeacherInput = {
@@ -549,27 +637,29 @@ export type TeacherPaymentCreateManyTeacherInput = {
 export type TeacherPaymentUpdateWithoutTeacherInput = {
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  hours?: Prisma.IntFieldUpdateOperationsInput | number
+  hours?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   paymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transaction?: Prisma.TransactionUpdateOneWithoutTeacherPaymentNestedInput
 }
 
 export type TeacherPaymentUncheckedUpdateWithoutTeacherInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  hours?: Prisma.IntFieldUpdateOperationsInput | number
+  hours?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   paymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transaction?: Prisma.TransactionUncheckedUpdateOneWithoutTeacherPaymentNestedInput
 }
 
 export type TeacherPaymentUncheckedUpdateManyWithoutTeacherInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  hours?: Prisma.IntFieldUpdateOperationsInput | number
+  hours?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   paymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -587,6 +677,7 @@ export type TeacherPaymentSelect<ExtArgs extends runtime.Types.Extensions.Intern
   paymentDate?: boolean
   method?: boolean
   teacher?: boolean | Prisma.TeacherDefaultArgs<ExtArgs>
+  transaction?: boolean | Prisma.TeacherPayment$transactionArgs<ExtArgs>
 }, ExtArgs["result"]["teacherPayment"]>
 
 export type TeacherPaymentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -627,6 +718,7 @@ export type TeacherPaymentSelectScalar = {
 export type TeacherPaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "teacherId" | "amount" | "type" | "hours" | "status" | "paymentDate" | "method", ExtArgs["result"]["teacherPayment"]>
 export type TeacherPaymentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   teacher?: boolean | Prisma.TeacherDefaultArgs<ExtArgs>
+  transaction?: boolean | Prisma.TeacherPayment$transactionArgs<ExtArgs>
 }
 export type TeacherPaymentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   teacher?: boolean | Prisma.TeacherDefaultArgs<ExtArgs>
@@ -639,6 +731,7 @@ export type $TeacherPaymentPayload<ExtArgs extends runtime.Types.Extensions.Inte
   name: "TeacherPayment"
   objects: {
     teacher: Prisma.$TeacherPayload<ExtArgs>
+    transaction: Prisma.$TransactionPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1044,6 +1137,7 @@ readonly fields: TeacherPaymentFieldRefs;
 export interface Prisma__TeacherPaymentClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   teacher<T extends Prisma.TeacherDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TeacherDefaultArgs<ExtArgs>>): Prisma.Prisma__TeacherClient<runtime.Types.Result.GetResult<Prisma.$TeacherPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  transaction<T extends Prisma.TeacherPayment$transactionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TeacherPayment$transactionArgs<ExtArgs>>): Prisma.Prisma__TransactionClient<runtime.Types.Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1077,7 +1171,7 @@ export interface TeacherPaymentFieldRefs {
   readonly teacherId: Prisma.FieldRef<"TeacherPayment", 'String'>
   readonly amount: Prisma.FieldRef<"TeacherPayment", 'Float'>
   readonly type: Prisma.FieldRef<"TeacherPayment", 'String'>
-  readonly hours: Prisma.FieldRef<"TeacherPayment", 'Int'>
+  readonly hours: Prisma.FieldRef<"TeacherPayment", 'Float'>
   readonly status: Prisma.FieldRef<"TeacherPayment", 'String'>
   readonly paymentDate: Prisma.FieldRef<"TeacherPayment", 'DateTime'>
   readonly method: Prisma.FieldRef<"TeacherPayment", 'String'>
@@ -1477,6 +1571,25 @@ export type TeacherPaymentDeleteManyArgs<ExtArgs extends runtime.Types.Extension
    * Limit how many TeacherPayments to delete.
    */
   limit?: number
+}
+
+/**
+ * TeacherPayment.transaction
+ */
+export type TeacherPayment$transactionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Transaction
+   */
+  select?: Prisma.TransactionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Transaction
+   */
+  omit?: Prisma.TransactionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TransactionInclude<ExtArgs> | null
+  where?: Prisma.TransactionWhereInput
 }
 
 /**

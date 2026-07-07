@@ -1,5 +1,6 @@
 export const dynamic = "force-dynamic";
 
+import FormModal from "@/components/FormModal";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
@@ -61,16 +62,46 @@ const columns = [
   },
 ];
 
-const TeacherPaymentListPage = async () => {
-  const teacherPaymentsData = await prisma.teacherPayment.findMany({
-    include: {
-      teacher: {
-        select: {
-          name: true,
+const TeacherPaymentListPage = async ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | undefined };
+}) => {
+  const { search, teacherId, page } = searchParams;
+  const p = page ? parseInt(page, 10) : 1;
+  const ITEM_LIMIT = 10;
+
+  const where: any = {};
+  if (teacherId) {
+    where.teacherId = teacherId;
+  }
+  if (search) {
+    where.OR = [
+      { teacherId: { contains: search } },
+      {
+        teacher: {
+          name: { contains: search }
+        }
+      }
+    ];
+  }
+
+  const [teacherPaymentsData, count] = await prisma.$transaction([
+    prisma.teacherPayment.findMany({
+      where,
+      include: {
+        teacher: {
+          select: {
+            name: true,
+          },
         },
       },
-    },
-  });
+      skip: ITEM_LIMIT * (p - 1),
+      take: ITEM_LIMIT,
+      orderBy: { id: "desc" },
+    }),
+    prisma.teacherPayment.count({ where }),
+  ]);
 
   const renderRow = (item: TeacherPayment) => {
     let statusColor = "bg-yellow-100 text-yellow-800";
@@ -97,15 +128,11 @@ const TeacherPaymentListPage = async () => {
         <td className="hidden lg:table-cell p-4">{item.method || "-"}</td>
         <td className="p-4">
           <div className="flex items-center gap-2">
-            <Link href={`/list/teacher-payments/${item.id}`}>
-              <button className="w-7 h-7 flex items-center justify-center rounded-full bg-lamaSky">
-                <Image src="/view.png" alt="" width={16} height={16} />
-              </button>
-            </Link>
             {role === "admin" && (
-              <button className="w-7 h-7 flex items-center justify-center rounded-full bg-lamaPurple">
-                <Image src="/delete.png" alt="" width={16} height={16} />
-              </button>
+              <>
+                <FormModal table="teacherPayment" type="update" data={item} />
+                <FormModal table="teacherPayment" type="delete" id={item.id} />
+              </>
             )}
           </div>
         </td>
@@ -128,9 +155,7 @@ const TeacherPaymentListPage = async () => {
               <Image src="/sort.png" alt="" width={14} height={14} />
             </button>
             {role === "admin" && (
-              <button className="w-8 h-8 flex items-center justify-center rounded-full bg-lamaYellow font-bold text-lg">
-                +
-              </button>
+              <FormModal table="teacherPayment" type="create" />
             )}
           </div>
         </div>
@@ -138,7 +163,7 @@ const TeacherPaymentListPage = async () => {
       {/* LIST */}
       <Table columns={columns} renderRow={renderRow} data={teacherPaymentsData} />
       {/* PAGINATION */}
-      <Pagination />
+      <Pagination page={p} count={count} />
     </div>
   );
 };

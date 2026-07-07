@@ -62,7 +62,11 @@ export const ModelName = {
   Event: 'Event',
   Announcement: 'Announcement',
   Payment: 'Payment',
-  TeacherPayment: 'TeacherPayment'
+  TeacherPayment: 'TeacherPayment',
+  Lead: 'Lead',
+  Transaction: 'Transaction',
+  Evaluation: 'Evaluation',
+  ReportCard: 'ReportCard'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -116,8 +120,11 @@ export const ClassScalarFieldEnum = {
   id: 'id',
   name: 'name',
   capacity: 'capacity',
+  minCapacity: 'minCapacity',
+  maxCapacity: 'maxCapacity',
   grade: 'grade',
-  supervisorId: 'supervisorId'
+  supervisorId: 'supervisorId',
+  whatsappLink: 'whatsappLink'
 } as const
 
 export type ClassScalarFieldEnum = (typeof ClassScalarFieldEnum)[keyof typeof ClassScalarFieldEnum]
@@ -127,7 +134,10 @@ export const LessonScalarFieldEnum = {
   id: 'id',
   subjectId: 'subjectId',
   classId: 'classId',
-  teacherId: 'teacherId'
+  teacherId: 'teacherId',
+  dayOfWeek: 'dayOfWeek',
+  startTime: 'startTime',
+  endTime: 'endTime'
 } as const
 
 export type LessonScalarFieldEnum = (typeof LessonScalarFieldEnum)[keyof typeof LessonScalarFieldEnum]
@@ -185,6 +195,7 @@ export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof Ev
 export const AnnouncementScalarFieldEnum = {
   id: 'id',
   title: 'title',
+  description: 'description',
   classId: 'classId',
   date: 'date'
 } as const
@@ -196,6 +207,7 @@ export const PaymentScalarFieldEnum = {
   id: 'id',
   studentId: 'studentId',
   amount: 'amount',
+  hours: 'hours',
   type: 'type',
   status: 'status',
   dueDate: 'dueDate',
@@ -218,6 +230,83 @@ export const TeacherPaymentScalarFieldEnum = {
 } as const
 
 export type TeacherPaymentScalarFieldEnum = (typeof TeacherPaymentScalarFieldEnum)[keyof typeof TeacherPaymentScalarFieldEnum]
+
+
+export const LeadScalarFieldEnum = {
+  id: 'id',
+  matricula: 'matricula',
+  name: 'name',
+  language: 'language',
+  level: 'level',
+  age: 'age',
+  phone: 'phone',
+  contactMethod: 'contactMethod',
+  leadDate: 'leadDate',
+  sampleClassDate: 'sampleClassDate',
+  status: 'status',
+  notes: 'notes',
+  createdAt: 'createdAt'
+} as const
+
+export type LeadScalarFieldEnum = (typeof LeadScalarFieldEnum)[keyof typeof LeadScalarFieldEnum]
+
+
+export const TransactionScalarFieldEnum = {
+  id: 'id',
+  amount: 'amount',
+  type: 'type',
+  category: 'category',
+  date: 'date',
+  description: 'description',
+  paymentId: 'paymentId',
+  teacherPaymentId: 'teacherPaymentId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[keyof typeof TransactionScalarFieldEnum]
+
+
+export const EvaluationScalarFieldEnum = {
+  id: 'id',
+  date: 'date',
+  classId: 'classId',
+  teacherId: 'teacherId',
+  q1_dinamica: 'q1_dinamica',
+  q2_recursos: 'q2_recursos',
+  q3_claridad: 'q3_claridad',
+  q4_escuchado: 'q4_escuchado',
+  q5_participa: 'q5_participa',
+  q6_dudas: 'q6_dudas',
+  q7_puntual: 'q7_puntual',
+  q8_interes: 'q8_interes',
+  q9_material: 'q9_material',
+  q10_relevante: 'q10_relevante',
+  q11_global: 'q11_global',
+  likedText: 'likedText',
+  improveText: 'improveText'
+} as const
+
+export type EvaluationScalarFieldEnum = (typeof EvaluationScalarFieldEnum)[keyof typeof EvaluationScalarFieldEnum]
+
+
+export const ReportCardScalarFieldEnum = {
+  id: 'id',
+  studentId: 'studentId',
+  teacherId: 'teacherId',
+  classId: 'classId',
+  dateText: 'dateText',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  reading: 'reading',
+  grammar: 'grammar',
+  listening: 'listening',
+  speaking: 'speaking',
+  total: 'total',
+  observations: 'observations'
+} as const
+
+export type ReportCardScalarFieldEnum = (typeof ReportCardScalarFieldEnum)[keyof typeof ReportCardScalarFieldEnum]
 
 
 export const SortOrder = {

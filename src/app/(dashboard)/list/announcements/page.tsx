@@ -4,13 +4,14 @@ import FormModal from "@/components/FormModal";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
-import { role } from "@/lib/data";
+import { getSession } from "@/lib/session";
 import prisma from "@/lib/prisma";
 import Image from "next/image";
 
 type Announcement = {
   id: number;
   title: string;
+  description?: string;
   classId?: string | null;
   date: Date;
 };
@@ -19,6 +20,11 @@ const columns = [
   {
     header: "Título",
     accessor: "title",
+  },
+  {
+    header: "Contenido",
+    accessor: "description",
+    className: "hidden lg:table-cell",
   },
   {
     header: "Grupo",
@@ -35,22 +41,61 @@ const columns = [
   },
 ];
 
-const AnnouncementListPage = async () => {
-  const announcementsData = await prisma.announcement.findMany({});
+const AnnouncementListPage = async ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | undefined };
+}) => {
+  const { role } = await getSession();
+  const { search, page } = searchParams;
+  const p = page ? parseInt(page, 10) : 1;
+  const ITEM_LIMIT = 10;
+
+  const where: any = {};
+  if (search) {
+    where.OR = [
+      { title: { contains: search } },
+      { description: { contains: search } },
+    ];
+  }
+
+  // Fetch Announcements with pagination
+  const [announcementsData, count] = await prisma.$transaction([
+    prisma.announcement.findMany({
+      where,
+      skip: ITEM_LIMIT * (p - 1),
+      take: ITEM_LIMIT,
+      orderBy: { date: "desc" },
+    }),
+    prisma.announcement.count({ where }),
+  ]);
+
+  // Fetch Classes for the dropdown selection
+  const classes = await prisma.class.findMany({
+    select: { id: true, name: true },
+    orderBy: { name: "asc" },
+  });
+
+  const classesFormatted = classes.map((c) => ({ id: c.id, name: c.name }));
 
   const renderRow = (item: Announcement) => (
     <tr
       key={item.id}
       className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-lamaPurpleLight"
     >
-      <td className="flex items-center gap-4 p-4">{item.title}</td>
+      <td className="flex items-center gap-4 p-4 font-semibold text-gray-800">{item.title}</td>
+      <td className="hidden lg:table-cell text-slate-500 max-w-xs truncate">{item.description || "-"}</td>
       <td>{item.classId || "Todos"}</td>
       <td className="hidden md:table-cell">{item.date.toLocaleDateString("es-MX")}</td>
       <td>
         <div className="flex items-center gap-2">
           {role === "admin" && (
             <>
-              <FormModal table="announcement" type="update" data={item} />
+              <FormModal
+                table="announcement"
+                type="update"
+                data={{ ...item, classes: classesFormatted }}
+              />
               <FormModal table="announcement" type="delete" id={item.id} />
             </>
           )}
@@ -76,7 +121,11 @@ const AnnouncementListPage = async () => {
               <Image src="/sort.png" alt="" width={14} height={14} />
             </button>
             {role === "admin" && (
-              <FormModal table="announcement" type="create" />
+              <FormModal
+                table="announcement"
+                type="create"
+                data={{ classes: classesFormatted }}
+              />
             )}
           </div>
         </div>
@@ -84,7 +133,7 @@ const AnnouncementListPage = async () => {
       {/* LIST */}
       <Table columns={columns} renderRow={renderRow} data={announcementsData} />
       {/* PAGINATION */}
-      <Pagination />
+      <Pagination page={p} count={count} />
     </div>
   );
 };

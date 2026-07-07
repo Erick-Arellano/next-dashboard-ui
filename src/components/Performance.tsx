@@ -1,17 +1,27 @@
 "use client";
 import Image from "next/image";
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from "recharts";
+import { PieChart, Pie, ResponsiveContainer } from "recharts";
 
-const data = [
-  { name: "Group A", value: 92, fill: "#C3EBFA" },
-  { name: "Group B", value: 8, fill: "#FAE27C" },
-];
+const Performance = ({ 
+  value, 
+  title = "Rendimiento Promedio" 
+}: { 
+  value: number | null; 
+  title?: string;
+}) => {
+  const hasValue = value !== null && !isNaN(value);
+  const displayValue = hasValue ? (value > 10 ? (value / 10).toFixed(1) : value.toFixed(1)) : "-";
+  const numValue = hasValue ? (value > 10 ? value / 10 : value) : 0;
+  
+  const chartData = [
+    { name: "Rendimiento", value: numValue, fill: "#C3EBFA" },
+    { name: "Faltante", value: Math.max(0, 10 - numValue), fill: "#FAE27C" },
+  ];
 
-const Performance = () => {
   return (
-    <div className="bg-white p-4 rounded-md h-80 relative">
+    <div className="bg-white p-4 rounded-md h-80 relative shadow-sm border border-gray-100">
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold">Rendimiento</h1>
+        <h1 className="text-lg font-semibold text-gray-800">{title}</h1>
         <Image src="/moreDark.png" alt="" width={16} height={16} />
       </div>
       <ResponsiveContainer width="100%" height="100%">
@@ -20,19 +30,22 @@ const Performance = () => {
             dataKey="value"
             startAngle={180}
             endAngle={0}
-            data={data}
+            data={chartData}
             cx="50%"
-            cy="50%"
+            cy="55%"
             innerRadius={70}
+            outerRadius={90}
             fill="#8884d8"
           />
         </PieChart>
       </ResponsiveContainer>
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-        <h1 className="text-3xl font-bold">9.2</h1>
-        <p className="text-xs text-gray-300">de 10 máx LTS</p>
+      <div className="absolute top-[52%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+        <h1 className="text-3xl font-bold text-gray-800">{displayValue}</h1>
+        <p className="text-xs text-gray-400 font-medium">{hasValue ? "de 10.0 pts" : "Sin evaluar"}</p>
       </div>
-      <h2 className="font-medium absolute bottom-16 left-0 right-0 m-auto text-center">1er Semestre - 2do Semestre</h2>
+      <h2 className="font-semibold text-sm absolute bottom-12 left-0 right-0 m-auto text-center text-gray-600">
+        Calificación Acumulada
+      </h2>
     </div>
   );
 };

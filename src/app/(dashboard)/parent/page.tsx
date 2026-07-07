@@ -1,7 +1,16 @@
 import Announcements from "@/components/Announcements";
 import BigCalendar from "@/components/BigCalender";
+import prisma from "@/lib/prisma";
 
-const ParentPage = () => {
+export const dynamic = "force-dynamic";
+
+const ParentPage = async () => {
+  // Fetch Announcements
+  const announcements = await prisma.announcement.findMany({
+    take: 3,
+    orderBy: { date: "desc" },
+  });
+
   return (
     <div className="flex-1 p-4 flex gap-4 flex-col xl:flex-row">
       {/* LEFT */}
@@ -13,7 +22,7 @@ const ParentPage = () => {
       </div>
       {/* RIGHT */}
       <div className="w-full xl:w-1/3 flex flex-col gap-8">
-        <Announcements />
+        <Announcements data={announcements as any} />
       </div>
     </div>
   );

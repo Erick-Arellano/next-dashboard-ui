@@ -77,3 +77,23 @@ export type Payment = Prisma.PaymentModel
  * 
  */
 export type TeacherPayment = Prisma.TeacherPaymentModel
+/**
+ * Model Lead
+ * 
+ */
+export type Lead = Prisma.LeadModel
+/**
+ * Model Transaction
+ * 
+ */
+export type Transaction = Prisma.TransactionModel
+/**
+ * Model Evaluation
+ * 
+ */
+export type Evaluation = Prisma.EvaluationModel
+/**
+ * Model ReportCard
+ * 
+ */
+export type ReportCard = Prisma.ReportCardModel

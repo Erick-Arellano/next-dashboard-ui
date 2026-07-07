@@ -1,0 +1,366 @@
+[
+  {
+    "id": "CHINO INDIVIDUAL",
+    "name": "CHINO INDIVIDUAL",
+    "capacity": 10,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "CHINO IND MIGUEL",
+    "name": "CHINO IND MIGUEL",
+    "capacity": 10,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "INGLES INDIVIDUAL OMAR",
+    "name": "INGLES INDIVIDUAL OMAR",
+    "capacity": 10,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "INGLES IND ISAAC",
+    "name": "INGLES IND ISAAC",
+    "capacity": 10,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "13+ INGLES LINEA",
+    "name": "13+ INGLES LINEA",
+    "capacity": 10,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "INGLES 13+ SABATINO",
+    "name": "INGLES 13+ SABATINO",
+    "capacity": 10,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "INGLES SABATINO NIÑOS 8+",
+    "name": "INGLES SABATINO NIÑOS 8+",
+    "capacity": 10,
+    "grade": 1,
+    "supervisorId": "T002"
+  },
+  {
+    "id": "INGLES",
+    "name": "INGLES",
+    "capacity": 10,
+    "grade": 1,
+    "supervisorId": "T004"
+  },
+  {
+    "id": "INGLÉS 6+",
+    "name": "INGLÉS 6+",
+    "capacity": 10,
+    "grade": 1,
+    "supervisorId": "T004"
+  },
+  {
+    "id": "INGLES 13+",
+    "name": "INGLES 13+",
+    "capacity": 10,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "INGLES ADULTOS",
+    "name": "INGLES ADULTOS",
+    "capacity": 10,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "CHINO SABATINO",
+    "name": "CHINO SABATINO",
+    "capacity": 10,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "CHINO CHENGDU",
+    "name": "CHINO CHENGDU",
+    "capacity": 10,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "CHINO BEJING",
+    "name": "CHINO BEJING",
+    "capacity": 10,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "CHINO",
+    "name": "CHINO",
+    "capacity": 10,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "FRANCES",
+    "name": "FRANCES",
+    "capacity": 10,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "CHINO NIÑOS 5+",
+    "name": "CHINO NIÑOS 5+",
+    "capacity": 10,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "CHINO EXTENSIVO",
+    "name": "CHINO EXTENSIVO",
+    "capacity": 10,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "CHINO INDIVIDUAL DANIEL",
+    "name": "CHINO INDIVIDUAL DANIEL",
+    "capacity": 10,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "ALEMAN ADULTOS EN LINEA",
+    "name": "ALEMAN ADULTOS EN LINEA",
+    "capacity": 10,
+    "grade": 1,
+    "supervisorId": "T007"
+  },
+  {
+    "id": "INGLES +18 ADULTOS",
+    "name": "INGLES +18 ADULTOS",
+    "capacity": 10,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "POR INICIAR",
+    "name": "POR INICIAR",
+    "capacity": 10,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "ALEMÁN",
+    "name": "ALEMÁN",
+    "capacity": 10,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "INGLES EN LINEA",
+    "name": "INGLES EN LINEA",
+    "capacity": 10,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "INGLES ADULTOS SABATINO",
+    "name": "INGLES ADULTOS SABATINO",
+    "capacity": 10,
+    "grade": 1,
+    "supervisorId": "T002"
+  },
+  {
+    "id": "6",
+    "name": "6",
+    "capacity": 15,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "BOSTON",
+    "name": "BOSTON",
+    "capacity": 15,
+    "grade": 2,
+    "supervisorId": "T002"
+  },
+  {
+    "id": "XIMEN",
+    "name": "XIMEN",
+    "capacity": 15,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "LAS VEGAS",
+    "name": "LAS VEGAS",
+    "capacity": 15,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "CHENGDU",
+    "name": "CHENGDU",
+    "capacity": 15,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "1A",
+    "name": "1A",
+    "capacity": 15,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "CHICAGO",
+    "name": "CHICAGO",
+    "capacity": 15,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "NEW  YORK",
+    "name": "NEW  YORK",
+    "capacity": 15,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "aleman",
+    "name": "aleman",
+    "capacity": 15,
+    "grade": 1,
+    "supervisorId": "T005"
+  },
+  {
+    "id": "CALIFORNIA",
+    "name": "CALIFORNIA",
+    "capacity": 15,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "Chino",
+    "name": "Chino",
+    "capacity": 15,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "INDIVIDUAL",
+    "name": "INDIVIDUAL",
+    "capacity": 15,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "Inglés",
+    "name": "Inglés",
+    "capacity": 15,
+    "grade": 1,
+    "supervisorId": "T004"
+  },
+  {
+    "id": "NANJING",
+    "name": "NANJING",
+    "capacity": 15,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "SHANGHAI",
+    "name": "SHANGHAI",
+    "capacity": 15,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "ARIZONA",
+    "name": "ARIZONA",
+    "capacity": 15,
+    "grade": 1,
+    "supervisorId": "T004"
+  },
+  {
+    "id": "NEW YORK",
+    "name": "NEW YORK",
+    "capacity": 15,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "BOSTON - INDIV",
+    "name": "BOSTON - INDIV",
+    "capacity": 15,
+    "grade": 1,
+    "supervisorId": "T004"
+  },
+  {
+    "id": "SAN FRANCISCO",
+    "name": "SAN FRANCISCO",
+    "capacity": 15,
+    "grade": 1,
+    "supervisorId": "T002"
+  },
+  {
+    "id": "FLORIDA",
+    "name": "FLORIDA",
+    "capacity": 15,
+    "grade": 1,
+    "supervisorId": "T007"
+  },
+  {
+    "id": "6/13",
+    "name": "6/13",
+    "capacity": 15,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "4",
+    "name": "4",
+    "capacity": 15,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "INGLÉS",
+    "name": "INGLÉS",
+    "capacity": 15,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "inglés",
+    "name": "inglés",
+    "capacity": 15,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "Ingles",
+    "name": "Ingles",
+    "capacity": 15,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "Alemán",
+    "name": "Alemán",
+    "capacity": 15,
+    "grade": 1,
+    "supervisorId": "T001"
+  },
+  {
+    "id": "INGLES KIDS",
+    "name": "INGLES KIDS",
+    "capacity": 15,
+    "grade": 1,
+    "supervisorId": "T001"
+  }
+]

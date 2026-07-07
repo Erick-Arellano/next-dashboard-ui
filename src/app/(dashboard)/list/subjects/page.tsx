@@ -30,16 +30,39 @@ const columns = [
   },
 ];
 
-const SubjectListPage = async () => {
-  const subjectsData = await prisma.subject.findMany({
-    include: {
-      teachers: {
-        select: {
-          name: true,
+import { getSession } from "@/lib/session";
+
+const SubjectListPage = async ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | undefined };
+}) => {
+  const { role } = await getSession();
+  const { search, page } = searchParams;
+  const p = page ? parseInt(page, 10) : 1;
+  const ITEM_LIMIT = 10;
+
+  const where: any = {};
+  if (search) {
+    where.name = { contains: search };
+  }
+
+  const [subjectsData, count] = await prisma.$transaction([
+    prisma.subject.findMany({
+      where,
+      include: {
+        teachers: {
+          select: {
+            name: true,
+          },
         },
       },
-    },
-  });
+      skip: ITEM_LIMIT * (p - 1),
+      take: ITEM_LIMIT,
+      orderBy: { name: "asc" },
+    }),
+    prisma.subject.count({ where }),
+  ]);
 
   const renderRow = (item: Subject) => (
     <tr
@@ -84,7 +107,7 @@ const SubjectListPage = async () => {
       {/* LIST */}
       <Table columns={columns} renderRow={renderRow} data={subjectsData} />
       {/* PAGINATION */}
-      <Pagination />
+      <Pagination page={p} count={count} />
     </div>
   );
 };

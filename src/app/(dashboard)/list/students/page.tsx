@@ -3,8 +3,9 @@ export const dynamic = "force-dynamic";
 import FormModal from "@/components/FormModal";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
-import TableSearch from "@/components/TableSearch";
-import { role } from "@/lib/data";
+import ListHeaderToolbar from "@/components/ListHeaderToolbar";
+import ExportButton from "@/components/ExportButton";
+import { getSession } from "@/lib/session";
 import prisma from "@/lib/prisma";
 import Image from "next/image";
 import Link from "next/link";
@@ -55,12 +56,124 @@ const columns = [
   },
 ];
 
-const StudentListPage = async () => {
-  const studentsData = await prisma.student.findMany({
-    include: {
-      class: true,
-    },
+const StudentListPage = async ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | undefined };
+}) => {
+  const { role, teacherId: sessionTeacherId } = await getSession();
+  const { search, classId, grade, sort, teacherId, page } = searchParams;
+  const p = page ? parseInt(page, 10) : 1;
+  const ITEM_LIMIT = 10;
+
+  let activeTeacherId = teacherId;
+  if (role === "teacher") {
+    activeTeacherId = sessionTeacherId || undefined;
+  }
+
+  // Build prisma query where clause
+  const where: any = {};
+
+  if (search) {
+    where.OR = [
+      { name: { contains: search } },
+      { id: { contains: search } },
+      { phone: { contains: search } },
+    ];
+  }
+
+  if (classId) {
+    where.classId = classId;
+  }
+
+  if (grade) {
+    where.grade = parseInt(grade, 10);
+  }
+
+  if (activeTeacherId) {
+    where.class = {
+      lessons: {
+        some: {
+          teacherId: activeTeacherId,
+        },
+      },
+    };
+  }
+
+  // Build prisma query orderBy clause
+  let orderBy: any = { name: "asc" }; // default order
+  if (sort) {
+    const [field, order] = sort.split("-");
+    if (field && (order === "asc" || order === "desc")) {
+      orderBy = { [field]: order };
+    }
+  }
+
+  // Fetch student data with filter/sort/pagination applied
+  const [studentsData, count, exportData] = await prisma.$transaction([
+    prisma.student.findMany({
+      where,
+      include: {
+        class: true,
+      },
+      orderBy,
+      skip: ITEM_LIMIT * (p - 1),
+      take: ITEM_LIMIT,
+    }),
+    prisma.student.count({ where }),
+    prisma.student.findMany({
+      where,
+      include: {
+        class: true,
+      },
+      orderBy,
+    }),
+  ]);
+
+  // Query classes to populate dynamic filter options
+  const classes = await prisma.class.findMany({
+    select: { id: true, name: true, grade: true },
+    orderBy: { name: "asc" },
   });
+
+  const classOptions = classes.map((c) => ({ label: c.name, value: c.id }));
+  
+  // Extract unique grades from classes
+  const gradeOptions = Array.from(new Set(classes.map((c) => c.grade)))
+    .sort((a, b) => a - b)
+    .map((g) => ({ label: `Nivel ${g}`, value: String(g) }));
+
+  const filterOptions = [
+    {
+      label: "Grupo / Clase",
+      paramName: "classId",
+      options: classOptions,
+    },
+    {
+      label: "Nivel Escolar",
+      paramName: "grade",
+      options: gradeOptions,
+    },
+  ];
+
+  const sortOptions = [
+    { label: "Nombre (A-Z)", value: "name-asc" },
+    { label: "Nombre (Z-A)", value: "name-desc" },
+    { label: "Matrícula (Menor a Mayor)", value: "id-asc" },
+    { label: "Matrícula (Mayor a Menor)", value: "id-desc" },
+    { label: "Nivel (Menor a Mayor)", value: "grade-asc" },
+    { label: "Nivel (Mayor a Menor)", value: "grade-desc" },
+  ];
+
+  const exportColumns = [
+    { header: "Matrícula", key: "id" },
+    { header: "Nombre", key: "name" },
+    { header: "Grupo", key: "classId" },
+    { header: "Nivel Escolar", key: "grade" },
+    { header: "Teléfono", key: "phone" },
+    { header: "Dirección", key: "address" },
+    { header: "Correo electrónico", key: "email" },
+  ];
 
   const renderRow = (item: Student) => (
     <tr
@@ -69,7 +182,7 @@ const StudentListPage = async () => {
     >
       <td className="flex items-center gap-4 p-4">
         <Image
-          src={item.photo || "/noAvatar.png"}
+          src={item.photo || "/avatar.png"}
           alt=""
           width={40}
           height={40}
@@ -87,8 +200,11 @@ const StudentListPage = async () => {
       <td>
         <div className="flex items-center gap-2">
           <Link href={`/list/students/${item.id}`}>
-            <button className="w-7 h-7 flex items-center justify-center rounded-full bg-lamaSky">
-              <Image src="/view.png" alt="" width={16} height={16} />
+            <button className="w-7 h-7 flex items-center justify-center rounded-full bg-blue-50 text-vocaliBlue hover:bg-vocaliBlue hover:text-white transition-all duration-200 shadow-sm border border-blue-100">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+              </svg>
             </button>
           </Link>
           {role === "admin" && (
@@ -105,14 +221,17 @@ const StudentListPage = async () => {
       <div className="flex items-center justify-between">
         <h1 className="hidden md:block text-lg font-semibold">Todos los Alumnos</h1>
         <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
-          <TableSearch />
+          <ListHeaderToolbar
+            placeholder="Buscar alumno..."
+            filterOptions={filterOptions}
+            sortOptions={sortOptions}
+          />
           <div className="flex items-center gap-4 self-end">
-            <button className="w-8 h-8 flex items-center justify-center rounded-full bg-lamaYellow">
-              <Image src="/filter.png" alt="" width={14} height={14} />
-            </button>
-            <button className="w-8 h-8 flex items-center justify-center rounded-full bg-lamaYellow">
-              <Image src="/sort.png" alt="" width={14} height={14} />
-            </button>
+            <ExportButton
+              data={exportData}
+              filename="Alumnos_Vocali.csv"
+              columns={exportColumns}
+            />
             {role === "admin" && (
               <FormModal table="student" type="create"/>
             )}
@@ -122,7 +241,7 @@ const StudentListPage = async () => {
       {/* LIST */}
       <Table columns={columns} renderRow={renderRow} data={studentsData} />
       {/* PAGINATION */}
-      <Pagination />
+      <Pagination page={p} count={count} />
     </div>
   );
 };

@@ -1,10 +1,13 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const labels: { [key: string]: string } = {
   student: "Alumnos",
   teacher: "Profesores",
   parent: "Tutores",
   staff: "Personal",
+  subject: "Cursos",
+  payment: "Cobros",
 };
 
 const cardStyles: { [key: string]: { bg: string; text: string; tagBg: string } } = {
@@ -23,11 +26,28 @@ const cardStyles: { [key: string]: { bg: string; text: string; tagBg: string } }
     text: "text-white",
     tagBg: "bg-white/20 text-white",
   },
+  subject: {
+    bg: "bg-gradient-to-br from-[#10B981] to-[#46E2A5] shadow-md shadow-emerald-100",
+    text: "text-white",
+    tagBg: "bg-white/20 text-white",
+  },
   staff: {
     bg: "bg-gradient-to-br from-[#8B5CF6] to-[#B18CFF] shadow-md shadow-purple-100",
     text: "text-white",
     tagBg: "bg-white/20 text-white",
   },
+  payment: {
+    bg: "bg-gradient-to-br from-[#8B5CF6] to-[#B18CFF] shadow-md shadow-purple-100",
+    text: "text-white",
+    tagBg: "bg-white/20 text-white",
+  },
+};
+
+const cardLinks: { [key: string]: string } = {
+  student: "/list/students",
+  teacher: "/list/teachers",
+  subject: "/list/lessons",
+  payment: "/list/payments",
 };
 
 const UserCard = ({ type, count }: { type: string; count?: number }) => {
@@ -38,18 +58,21 @@ const UserCard = ({ type, count }: { type: string; count?: number }) => {
   };
 
   const displayCount = count !== undefined ? count.toLocaleString() : "1,234";
+  const targetLink = cardLinks[type] || "#";
 
   return (
-    <div className={`rounded-2xl p-4 flex-1 min-w-[130px] transition-all duration-300 hover:scale-[1.03] hover:shadow-lg ${style.bg}`}>
+    <Link 
+      href={targetLink}
+      className={`rounded-2xl p-4 flex-1 min-w-[130px] transition-all duration-300 hover:scale-[1.04] hover:shadow-lg block cursor-pointer select-none ${style.bg}`}
+    >
       <div className="flex justify-between items-center">
         <span className={`text-[10px] px-2 py-1 rounded-full font-medium ${style.tagBg}`}>
           2026/27
         </span>
-        <Image src="/more.png" alt="" width={20} height={20} className="opacity-90 brightness-200" />
       </div>
       <h1 className={`text-2xl font-bold my-4 ${style.text}`}>{displayCount}</h1>
       <h2 className={`capitalize text-xs font-semibold ${style.text} opacity-90`}>{labels[type] || type}</h2>
-    </div>
+    </Link>
   );
 };
 

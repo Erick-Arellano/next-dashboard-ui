@@ -1,8 +1,16 @@
 import Announcements from "@/components/Announcements";
 import BigCalendar from "@/components/BigCalender";
-import EventCalendar from "@/components/EventCalendar";
+import prisma from "@/lib/prisma";
 
-const StudentPage = () => {
+export const dynamic = "force-dynamic";
+
+const StudentPage = async () => {
+  // Fetch Announcements
+  const announcements = await prisma.announcement.findMany({
+    take: 3,
+    orderBy: { date: "desc" },
+  });
+
   return (
     <div className="p-4 flex gap-4 flex-col xl:flex-row">
       {/* LEFT */}
@@ -14,8 +22,7 @@ const StudentPage = () => {
       </div>
       {/* RIGHT */}
       <div className="w-full xl:w-1/3 flex flex-col gap-8">
-        <EventCalendar />
-        <Announcements />
+        <Announcements data={announcements as any} />
       </div>
     </div>
   );

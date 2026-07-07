@@ -243,6 +243,7 @@ export type StudentWhereInput = {
   class?: Prisma.XOR<Prisma.ClassNullableScalarRelationFilter, Prisma.ClassWhereInput> | null
   payments?: Prisma.PaymentListRelationFilter
   results?: Prisma.ResultListRelationFilter
+  reportCards?: Prisma.ReportCardListRelationFilter
 }
 
 export type StudentOrderByWithRelationInput = {
@@ -257,6 +258,7 @@ export type StudentOrderByWithRelationInput = {
   class?: Prisma.ClassOrderByWithRelationInput
   payments?: Prisma.PaymentOrderByRelationAggregateInput
   results?: Prisma.ResultOrderByRelationAggregateInput
+  reportCards?: Prisma.ReportCardOrderByRelationAggregateInput
 }
 
 export type StudentWhereUniqueInput = Prisma.AtLeast<{
@@ -274,6 +276,7 @@ export type StudentWhereUniqueInput = Prisma.AtLeast<{
   class?: Prisma.XOR<Prisma.ClassNullableScalarRelationFilter, Prisma.ClassWhereInput> | null
   payments?: Prisma.PaymentListRelationFilter
   results?: Prisma.ResultListRelationFilter
+  reportCards?: Prisma.ReportCardListRelationFilter
 }, "id" | "email">
 
 export type StudentOrderByWithAggregationInput = {
@@ -317,6 +320,7 @@ export type StudentCreateInput = {
   class?: Prisma.ClassCreateNestedOneWithoutStudentsInput
   payments?: Prisma.PaymentCreateNestedManyWithoutStudentInput
   results?: Prisma.ResultCreateNestedManyWithoutStudentInput
+  reportCards?: Prisma.ReportCardCreateNestedManyWithoutStudentInput
 }
 
 export type StudentUncheckedCreateInput = {
@@ -330,6 +334,7 @@ export type StudentUncheckedCreateInput = {
   classId?: string | null
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutStudentInput
   results?: Prisma.ResultUncheckedCreateNestedManyWithoutStudentInput
+  reportCards?: Prisma.ReportCardUncheckedCreateNestedManyWithoutStudentInput
 }
 
 export type StudentUpdateInput = {
@@ -343,6 +348,7 @@ export type StudentUpdateInput = {
   class?: Prisma.ClassUpdateOneWithoutStudentsNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutStudentNestedInput
   results?: Prisma.ResultUpdateManyWithoutStudentNestedInput
+  reportCards?: Prisma.ReportCardUpdateManyWithoutStudentNestedInput
 }
 
 export type StudentUncheckedUpdateInput = {
@@ -356,6 +362,7 @@ export type StudentUncheckedUpdateInput = {
   classId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutStudentNestedInput
   results?: Prisma.ResultUncheckedUpdateManyWithoutStudentNestedInput
+  reportCards?: Prisma.ReportCardUncheckedUpdateManyWithoutStudentNestedInput
 }
 
 export type StudentCreateManyInput = {
@@ -524,6 +531,20 @@ export type StudentUpdateOneRequiredWithoutPaymentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.StudentUpdateToOneWithWhereWithoutPaymentsInput, Prisma.StudentUpdateWithoutPaymentsInput>, Prisma.StudentUncheckedUpdateWithoutPaymentsInput>
 }
 
+export type StudentCreateNestedOneWithoutReportCardsInput = {
+  create?: Prisma.XOR<Prisma.StudentCreateWithoutReportCardsInput, Prisma.StudentUncheckedCreateWithoutReportCardsInput>
+  connectOrCreate?: Prisma.StudentCreateOrConnectWithoutReportCardsInput
+  connect?: Prisma.StudentWhereUniqueInput
+}
+
+export type StudentUpdateOneRequiredWithoutReportCardsNestedInput = {
+  create?: Prisma.XOR<Prisma.StudentCreateWithoutReportCardsInput, Prisma.StudentUncheckedCreateWithoutReportCardsInput>
+  connectOrCreate?: Prisma.StudentCreateOrConnectWithoutReportCardsInput
+  upsert?: Prisma.StudentUpsertWithoutReportCardsInput
+  connect?: Prisma.StudentWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StudentUpdateToOneWithWhereWithoutReportCardsInput, Prisma.StudentUpdateWithoutReportCardsInput>, Prisma.StudentUncheckedUpdateWithoutReportCardsInput>
+}
+
 export type StudentCreateWithoutClassInput = {
   id: string
   name: string
@@ -534,6 +555,7 @@ export type StudentCreateWithoutClassInput = {
   grade: number
   payments?: Prisma.PaymentCreateNestedManyWithoutStudentInput
   results?: Prisma.ResultCreateNestedManyWithoutStudentInput
+  reportCards?: Prisma.ReportCardCreateNestedManyWithoutStudentInput
 }
 
 export type StudentUncheckedCreateWithoutClassInput = {
@@ -546,6 +568,7 @@ export type StudentUncheckedCreateWithoutClassInput = {
   grade: number
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutStudentInput
   results?: Prisma.ResultUncheckedCreateNestedManyWithoutStudentInput
+  reportCards?: Prisma.ReportCardUncheckedCreateNestedManyWithoutStudentInput
 }
 
 export type StudentCreateOrConnectWithoutClassInput = {
@@ -597,6 +620,7 @@ export type StudentCreateWithoutResultsInput = {
   grade: number
   class?: Prisma.ClassCreateNestedOneWithoutStudentsInput
   payments?: Prisma.PaymentCreateNestedManyWithoutStudentInput
+  reportCards?: Prisma.ReportCardCreateNestedManyWithoutStudentInput
 }
 
 export type StudentUncheckedCreateWithoutResultsInput = {
@@ -609,6 +633,7 @@ export type StudentUncheckedCreateWithoutResultsInput = {
   grade: number
   classId?: string | null
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutStudentInput
+  reportCards?: Prisma.ReportCardUncheckedCreateNestedManyWithoutStudentInput
 }
 
 export type StudentCreateOrConnectWithoutResultsInput = {
@@ -637,6 +662,7 @@ export type StudentUpdateWithoutResultsInput = {
   grade?: Prisma.IntFieldUpdateOperationsInput | number
   class?: Prisma.ClassUpdateOneWithoutStudentsNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutStudentNestedInput
+  reportCards?: Prisma.ReportCardUpdateManyWithoutStudentNestedInput
 }
 
 export type StudentUncheckedUpdateWithoutResultsInput = {
@@ -649,6 +675,7 @@ export type StudentUncheckedUpdateWithoutResultsInput = {
   grade?: Prisma.IntFieldUpdateOperationsInput | number
   classId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutStudentNestedInput
+  reportCards?: Prisma.ReportCardUncheckedUpdateManyWithoutStudentNestedInput
 }
 
 export type StudentCreateWithoutPaymentsInput = {
@@ -661,6 +688,7 @@ export type StudentCreateWithoutPaymentsInput = {
   grade: number
   class?: Prisma.ClassCreateNestedOneWithoutStudentsInput
   results?: Prisma.ResultCreateNestedManyWithoutStudentInput
+  reportCards?: Prisma.ReportCardCreateNestedManyWithoutStudentInput
 }
 
 export type StudentUncheckedCreateWithoutPaymentsInput = {
@@ -673,6 +701,7 @@ export type StudentUncheckedCreateWithoutPaymentsInput = {
   grade: number
   classId?: string | null
   results?: Prisma.ResultUncheckedCreateNestedManyWithoutStudentInput
+  reportCards?: Prisma.ReportCardUncheckedCreateNestedManyWithoutStudentInput
 }
 
 export type StudentCreateOrConnectWithoutPaymentsInput = {
@@ -701,6 +730,7 @@ export type StudentUpdateWithoutPaymentsInput = {
   grade?: Prisma.IntFieldUpdateOperationsInput | number
   class?: Prisma.ClassUpdateOneWithoutStudentsNestedInput
   results?: Prisma.ResultUpdateManyWithoutStudentNestedInput
+  reportCards?: Prisma.ReportCardUpdateManyWithoutStudentNestedInput
 }
 
 export type StudentUncheckedUpdateWithoutPaymentsInput = {
@@ -712,6 +742,75 @@ export type StudentUncheckedUpdateWithoutPaymentsInput = {
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   grade?: Prisma.IntFieldUpdateOperationsInput | number
   classId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  results?: Prisma.ResultUncheckedUpdateManyWithoutStudentNestedInput
+  reportCards?: Prisma.ReportCardUncheckedUpdateManyWithoutStudentNestedInput
+}
+
+export type StudentCreateWithoutReportCardsInput = {
+  id: string
+  name: string
+  email?: string | null
+  phone?: string | null
+  photo?: string | null
+  address?: string | null
+  grade: number
+  class?: Prisma.ClassCreateNestedOneWithoutStudentsInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutStudentInput
+  results?: Prisma.ResultCreateNestedManyWithoutStudentInput
+}
+
+export type StudentUncheckedCreateWithoutReportCardsInput = {
+  id: string
+  name: string
+  email?: string | null
+  phone?: string | null
+  photo?: string | null
+  address?: string | null
+  grade: number
+  classId?: string | null
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutStudentInput
+  results?: Prisma.ResultUncheckedCreateNestedManyWithoutStudentInput
+}
+
+export type StudentCreateOrConnectWithoutReportCardsInput = {
+  where: Prisma.StudentWhereUniqueInput
+  create: Prisma.XOR<Prisma.StudentCreateWithoutReportCardsInput, Prisma.StudentUncheckedCreateWithoutReportCardsInput>
+}
+
+export type StudentUpsertWithoutReportCardsInput = {
+  update: Prisma.XOR<Prisma.StudentUpdateWithoutReportCardsInput, Prisma.StudentUncheckedUpdateWithoutReportCardsInput>
+  create: Prisma.XOR<Prisma.StudentCreateWithoutReportCardsInput, Prisma.StudentUncheckedCreateWithoutReportCardsInput>
+  where?: Prisma.StudentWhereInput
+}
+
+export type StudentUpdateToOneWithWhereWithoutReportCardsInput = {
+  where?: Prisma.StudentWhereInput
+  data: Prisma.XOR<Prisma.StudentUpdateWithoutReportCardsInput, Prisma.StudentUncheckedUpdateWithoutReportCardsInput>
+}
+
+export type StudentUpdateWithoutReportCardsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  grade?: Prisma.IntFieldUpdateOperationsInput | number
+  class?: Prisma.ClassUpdateOneWithoutStudentsNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutStudentNestedInput
+  results?: Prisma.ResultUpdateManyWithoutStudentNestedInput
+}
+
+export type StudentUncheckedUpdateWithoutReportCardsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  grade?: Prisma.IntFieldUpdateOperationsInput | number
+  classId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutStudentNestedInput
   results?: Prisma.ResultUncheckedUpdateManyWithoutStudentNestedInput
 }
 
@@ -735,6 +834,7 @@ export type StudentUpdateWithoutClassInput = {
   grade?: Prisma.IntFieldUpdateOperationsInput | number
   payments?: Prisma.PaymentUpdateManyWithoutStudentNestedInput
   results?: Prisma.ResultUpdateManyWithoutStudentNestedInput
+  reportCards?: Prisma.ReportCardUpdateManyWithoutStudentNestedInput
 }
 
 export type StudentUncheckedUpdateWithoutClassInput = {
@@ -747,6 +847,7 @@ export type StudentUncheckedUpdateWithoutClassInput = {
   grade?: Prisma.IntFieldUpdateOperationsInput | number
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutStudentNestedInput
   results?: Prisma.ResultUncheckedUpdateManyWithoutStudentNestedInput
+  reportCards?: Prisma.ReportCardUncheckedUpdateManyWithoutStudentNestedInput
 }
 
 export type StudentUncheckedUpdateManyWithoutClassInput = {
@@ -767,11 +868,13 @@ export type StudentUncheckedUpdateManyWithoutClassInput = {
 export type StudentCountOutputType = {
   payments: number
   results: number
+  reportCards: number
 }
 
 export type StudentCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   payments?: boolean | StudentCountOutputTypeCountPaymentsArgs
   results?: boolean | StudentCountOutputTypeCountResultsArgs
+  reportCards?: boolean | StudentCountOutputTypeCountReportCardsArgs
 }
 
 /**
@@ -798,6 +901,13 @@ export type StudentCountOutputTypeCountResultsArgs<ExtArgs extends runtime.Types
   where?: Prisma.ResultWhereInput
 }
 
+/**
+ * StudentCountOutputType without action
+ */
+export type StudentCountOutputTypeCountReportCardsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ReportCardWhereInput
+}
+
 
 export type StudentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -811,6 +921,7 @@ export type StudentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   class?: boolean | Prisma.Student$classArgs<ExtArgs>
   payments?: boolean | Prisma.Student$paymentsArgs<ExtArgs>
   results?: boolean | Prisma.Student$resultsArgs<ExtArgs>
+  reportCards?: boolean | Prisma.Student$reportCardsArgs<ExtArgs>
   _count?: boolean | Prisma.StudentCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["student"]>
 
@@ -854,6 +965,7 @@ export type StudentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   class?: boolean | Prisma.Student$classArgs<ExtArgs>
   payments?: boolean | Prisma.Student$paymentsArgs<ExtArgs>
   results?: boolean | Prisma.Student$resultsArgs<ExtArgs>
+  reportCards?: boolean | Prisma.Student$reportCardsArgs<ExtArgs>
   _count?: boolean | Prisma.StudentCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type StudentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -869,6 +981,7 @@ export type $StudentPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     class: Prisma.$ClassPayload<ExtArgs> | null
     payments: Prisma.$PaymentPayload<ExtArgs>[]
     results: Prisma.$ResultPayload<ExtArgs>[]
+    reportCards: Prisma.$ReportCardPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1276,6 +1389,7 @@ export interface Prisma__StudentClient<T, Null = never, ExtArgs extends runtime.
   class<T extends Prisma.Student$classArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Student$classArgs<ExtArgs>>): Prisma.Prisma__ClassClient<runtime.Types.Result.GetResult<Prisma.$ClassPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   payments<T extends Prisma.Student$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Student$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   results<T extends Prisma.Student$resultsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Student$resultsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ResultPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  reportCards<T extends Prisma.Student$reportCardsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Student$reportCardsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReportCardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1776,6 +1890,30 @@ export type Student$resultsArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.ResultScalarFieldEnum | Prisma.ResultScalarFieldEnum[]
+}
+
+/**
+ * Student.reportCards
+ */
+export type Student$reportCardsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ReportCard
+   */
+  select?: Prisma.ReportCardSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ReportCard
+   */
+  omit?: Prisma.ReportCardOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReportCardInclude<ExtArgs> | null
+  where?: Prisma.ReportCardWhereInput
+  orderBy?: Prisma.ReportCardOrderByWithRelationInput | Prisma.ReportCardOrderByWithRelationInput[]
+  cursor?: Prisma.ReportCardWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ReportCardScalarFieldEnum | Prisma.ReportCardScalarFieldEnum[]
 }
 
 /**

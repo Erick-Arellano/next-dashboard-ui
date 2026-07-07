@@ -28,11 +28,15 @@ export type AggregateClass = {
 
 export type ClassAvgAggregateOutputType = {
   capacity: number | null
+  minCapacity: number | null
+  maxCapacity: number | null
   grade: number | null
 }
 
 export type ClassSumAggregateOutputType = {
   capacity: number | null
+  minCapacity: number | null
+  maxCapacity: number | null
   grade: number | null
 }
 
@@ -40,35 +44,48 @@ export type ClassMinAggregateOutputType = {
   id: string | null
   name: string | null
   capacity: number | null
+  minCapacity: number | null
+  maxCapacity: number | null
   grade: number | null
   supervisorId: string | null
+  whatsappLink: string | null
 }
 
 export type ClassMaxAggregateOutputType = {
   id: string | null
   name: string | null
   capacity: number | null
+  minCapacity: number | null
+  maxCapacity: number | null
   grade: number | null
   supervisorId: string | null
+  whatsappLink: string | null
 }
 
 export type ClassCountAggregateOutputType = {
   id: number
   name: number
   capacity: number
+  minCapacity: number
+  maxCapacity: number
   grade: number
   supervisorId: number
+  whatsappLink: number
   _all: number
 }
 
 
 export type ClassAvgAggregateInputType = {
   capacity?: true
+  minCapacity?: true
+  maxCapacity?: true
   grade?: true
 }
 
 export type ClassSumAggregateInputType = {
   capacity?: true
+  minCapacity?: true
+  maxCapacity?: true
   grade?: true
 }
 
@@ -76,24 +93,33 @@ export type ClassMinAggregateInputType = {
   id?: true
   name?: true
   capacity?: true
+  minCapacity?: true
+  maxCapacity?: true
   grade?: true
   supervisorId?: true
+  whatsappLink?: true
 }
 
 export type ClassMaxAggregateInputType = {
   id?: true
   name?: true
   capacity?: true
+  minCapacity?: true
+  maxCapacity?: true
   grade?: true
   supervisorId?: true
+  whatsappLink?: true
 }
 
 export type ClassCountAggregateInputType = {
   id?: true
   name?: true
   capacity?: true
+  minCapacity?: true
+  maxCapacity?: true
   grade?: true
   supervisorId?: true
+  whatsappLink?: true
   _all?: true
 }
 
@@ -187,8 +213,11 @@ export type ClassGroupByOutputType = {
   id: string
   name: string
   capacity: number
+  minCapacity: number
+  maxCapacity: number
   grade: number
   supervisorId: string | null
+  whatsappLink: string | null
   _count: ClassCountAggregateOutputType | null
   _avg: ClassAvgAggregateOutputType | null
   _sum: ClassSumAggregateOutputType | null
@@ -218,28 +247,38 @@ export type ClassWhereInput = {
   id?: Prisma.StringFilter<"Class"> | string
   name?: Prisma.StringFilter<"Class"> | string
   capacity?: Prisma.IntFilter<"Class"> | number
+  minCapacity?: Prisma.IntFilter<"Class"> | number
+  maxCapacity?: Prisma.IntFilter<"Class"> | number
   grade?: Prisma.IntFilter<"Class"> | number
   supervisorId?: Prisma.StringNullableFilter<"Class"> | string | null
+  whatsappLink?: Prisma.StringNullableFilter<"Class"> | string | null
   supervisor?: Prisma.XOR<Prisma.TeacherNullableScalarRelationFilter, Prisma.TeacherWhereInput> | null
   students?: Prisma.StudentListRelationFilter
   lessons?: Prisma.LessonListRelationFilter
   exams?: Prisma.ExamListRelationFilter
   assignments?: Prisma.AssignmentListRelationFilter
   results?: Prisma.ResultListRelationFilter
+  evaluations?: Prisma.EvaluationListRelationFilter
+  reportCards?: Prisma.ReportCardListRelationFilter
 }
 
 export type ClassOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   capacity?: Prisma.SortOrder
+  minCapacity?: Prisma.SortOrder
+  maxCapacity?: Prisma.SortOrder
   grade?: Prisma.SortOrder
   supervisorId?: Prisma.SortOrderInput | Prisma.SortOrder
+  whatsappLink?: Prisma.SortOrderInput | Prisma.SortOrder
   supervisor?: Prisma.TeacherOrderByWithRelationInput
   students?: Prisma.StudentOrderByRelationAggregateInput
   lessons?: Prisma.LessonOrderByRelationAggregateInput
   exams?: Prisma.ExamOrderByRelationAggregateInput
   assignments?: Prisma.AssignmentOrderByRelationAggregateInput
   results?: Prisma.ResultOrderByRelationAggregateInput
+  evaluations?: Prisma.EvaluationOrderByRelationAggregateInput
+  reportCards?: Prisma.ReportCardOrderByRelationAggregateInput
 }
 
 export type ClassWhereUniqueInput = Prisma.AtLeast<{
@@ -249,22 +288,30 @@ export type ClassWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.ClassWhereInput[]
   NOT?: Prisma.ClassWhereInput | Prisma.ClassWhereInput[]
   capacity?: Prisma.IntFilter<"Class"> | number
+  minCapacity?: Prisma.IntFilter<"Class"> | number
+  maxCapacity?: Prisma.IntFilter<"Class"> | number
   grade?: Prisma.IntFilter<"Class"> | number
   supervisorId?: Prisma.StringNullableFilter<"Class"> | string | null
+  whatsappLink?: Prisma.StringNullableFilter<"Class"> | string | null
   supervisor?: Prisma.XOR<Prisma.TeacherNullableScalarRelationFilter, Prisma.TeacherWhereInput> | null
   students?: Prisma.StudentListRelationFilter
   lessons?: Prisma.LessonListRelationFilter
   exams?: Prisma.ExamListRelationFilter
   assignments?: Prisma.AssignmentListRelationFilter
   results?: Prisma.ResultListRelationFilter
+  evaluations?: Prisma.EvaluationListRelationFilter
+  reportCards?: Prisma.ReportCardListRelationFilter
 }, "id" | "name">
 
 export type ClassOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   capacity?: Prisma.SortOrder
+  minCapacity?: Prisma.SortOrder
+  maxCapacity?: Prisma.SortOrder
   grade?: Prisma.SortOrder
   supervisorId?: Prisma.SortOrderInput | Prisma.SortOrder
+  whatsappLink?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ClassCountOrderByAggregateInput
   _avg?: Prisma.ClassAvgOrderByAggregateInput
   _max?: Prisma.ClassMaxOrderByAggregateInput
@@ -279,83 +326,115 @@ export type ClassScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Class"> | string
   name?: Prisma.StringWithAggregatesFilter<"Class"> | string
   capacity?: Prisma.IntWithAggregatesFilter<"Class"> | number
+  minCapacity?: Prisma.IntWithAggregatesFilter<"Class"> | number
+  maxCapacity?: Prisma.IntWithAggregatesFilter<"Class"> | number
   grade?: Prisma.IntWithAggregatesFilter<"Class"> | number
   supervisorId?: Prisma.StringNullableWithAggregatesFilter<"Class"> | string | null
+  whatsappLink?: Prisma.StringNullableWithAggregatesFilter<"Class"> | string | null
 }
 
 export type ClassCreateInput = {
   id: string
   name: string
   capacity: number
+  minCapacity?: number
+  maxCapacity?: number
   grade: number
+  whatsappLink?: string | null
   supervisor?: Prisma.TeacherCreateNestedOneWithoutClassesInput
   students?: Prisma.StudentCreateNestedManyWithoutClassInput
   lessons?: Prisma.LessonCreateNestedManyWithoutClassInput
   exams?: Prisma.ExamCreateNestedManyWithoutClassInput
   assignments?: Prisma.AssignmentCreateNestedManyWithoutClassInput
   results?: Prisma.ResultCreateNestedManyWithoutClassInput
+  evaluations?: Prisma.EvaluationCreateNestedManyWithoutClassInput
+  reportCards?: Prisma.ReportCardCreateNestedManyWithoutClassInput
 }
 
 export type ClassUncheckedCreateInput = {
   id: string
   name: string
   capacity: number
+  minCapacity?: number
+  maxCapacity?: number
   grade: number
   supervisorId?: string | null
+  whatsappLink?: string | null
   students?: Prisma.StudentUncheckedCreateNestedManyWithoutClassInput
   lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutClassInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutClassInput
   assignments?: Prisma.AssignmentUncheckedCreateNestedManyWithoutClassInput
   results?: Prisma.ResultUncheckedCreateNestedManyWithoutClassInput
+  evaluations?: Prisma.EvaluationUncheckedCreateNestedManyWithoutClassInput
+  reportCards?: Prisma.ReportCardUncheckedCreateNestedManyWithoutClassInput
 }
 
 export type ClassUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  minCapacity?: Prisma.IntFieldUpdateOperationsInput | number
+  maxCapacity?: Prisma.IntFieldUpdateOperationsInput | number
   grade?: Prisma.IntFieldUpdateOperationsInput | number
+  whatsappLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supervisor?: Prisma.TeacherUpdateOneWithoutClassesNestedInput
   students?: Prisma.StudentUpdateManyWithoutClassNestedInput
   lessons?: Prisma.LessonUpdateManyWithoutClassNestedInput
   exams?: Prisma.ExamUpdateManyWithoutClassNestedInput
   assignments?: Prisma.AssignmentUpdateManyWithoutClassNestedInput
   results?: Prisma.ResultUpdateManyWithoutClassNestedInput
+  evaluations?: Prisma.EvaluationUpdateManyWithoutClassNestedInput
+  reportCards?: Prisma.ReportCardUpdateManyWithoutClassNestedInput
 }
 
 export type ClassUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  minCapacity?: Prisma.IntFieldUpdateOperationsInput | number
+  maxCapacity?: Prisma.IntFieldUpdateOperationsInput | number
   grade?: Prisma.IntFieldUpdateOperationsInput | number
   supervisorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   students?: Prisma.StudentUncheckedUpdateManyWithoutClassNestedInput
   lessons?: Prisma.LessonUncheckedUpdateManyWithoutClassNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutClassNestedInput
   assignments?: Prisma.AssignmentUncheckedUpdateManyWithoutClassNestedInput
   results?: Prisma.ResultUncheckedUpdateManyWithoutClassNestedInput
+  evaluations?: Prisma.EvaluationUncheckedUpdateManyWithoutClassNestedInput
+  reportCards?: Prisma.ReportCardUncheckedUpdateManyWithoutClassNestedInput
 }
 
 export type ClassCreateManyInput = {
   id: string
   name: string
   capacity: number
+  minCapacity?: number
+  maxCapacity?: number
   grade: number
   supervisorId?: string | null
+  whatsappLink?: string | null
 }
 
 export type ClassUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  minCapacity?: Prisma.IntFieldUpdateOperationsInput | number
+  maxCapacity?: Prisma.IntFieldUpdateOperationsInput | number
   grade?: Prisma.IntFieldUpdateOperationsInput | number
+  whatsappLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ClassUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  minCapacity?: Prisma.IntFieldUpdateOperationsInput | number
+  maxCapacity?: Prisma.IntFieldUpdateOperationsInput | number
   grade?: Prisma.IntFieldUpdateOperationsInput | number
   supervisorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ClassListRelationFilter = {
@@ -377,12 +456,17 @@ export type ClassCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   capacity?: Prisma.SortOrder
+  minCapacity?: Prisma.SortOrder
+  maxCapacity?: Prisma.SortOrder
   grade?: Prisma.SortOrder
   supervisorId?: Prisma.SortOrder
+  whatsappLink?: Prisma.SortOrder
 }
 
 export type ClassAvgOrderByAggregateInput = {
   capacity?: Prisma.SortOrder
+  minCapacity?: Prisma.SortOrder
+  maxCapacity?: Prisma.SortOrder
   grade?: Prisma.SortOrder
 }
 
@@ -390,20 +474,28 @@ export type ClassMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   capacity?: Prisma.SortOrder
+  minCapacity?: Prisma.SortOrder
+  maxCapacity?: Prisma.SortOrder
   grade?: Prisma.SortOrder
   supervisorId?: Prisma.SortOrder
+  whatsappLink?: Prisma.SortOrder
 }
 
 export type ClassMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   capacity?: Prisma.SortOrder
+  minCapacity?: Prisma.SortOrder
+  maxCapacity?: Prisma.SortOrder
   grade?: Prisma.SortOrder
   supervisorId?: Prisma.SortOrder
+  whatsappLink?: Prisma.SortOrder
 }
 
 export type ClassSumOrderByAggregateInput = {
   capacity?: Prisma.SortOrder
+  minCapacity?: Prisma.SortOrder
+  maxCapacity?: Prisma.SortOrder
   grade?: Prisma.SortOrder
 }
 
@@ -526,28 +618,66 @@ export type ClassUpdateOneRequiredWithoutResultsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ClassUpdateToOneWithWhereWithoutResultsInput, Prisma.ClassUpdateWithoutResultsInput>, Prisma.ClassUncheckedUpdateWithoutResultsInput>
 }
 
+export type ClassCreateNestedOneWithoutEvaluationsInput = {
+  create?: Prisma.XOR<Prisma.ClassCreateWithoutEvaluationsInput, Prisma.ClassUncheckedCreateWithoutEvaluationsInput>
+  connectOrCreate?: Prisma.ClassCreateOrConnectWithoutEvaluationsInput
+  connect?: Prisma.ClassWhereUniqueInput
+}
+
+export type ClassUpdateOneRequiredWithoutEvaluationsNestedInput = {
+  create?: Prisma.XOR<Prisma.ClassCreateWithoutEvaluationsInput, Prisma.ClassUncheckedCreateWithoutEvaluationsInput>
+  connectOrCreate?: Prisma.ClassCreateOrConnectWithoutEvaluationsInput
+  upsert?: Prisma.ClassUpsertWithoutEvaluationsInput
+  connect?: Prisma.ClassWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ClassUpdateToOneWithWhereWithoutEvaluationsInput, Prisma.ClassUpdateWithoutEvaluationsInput>, Prisma.ClassUncheckedUpdateWithoutEvaluationsInput>
+}
+
+export type ClassCreateNestedOneWithoutReportCardsInput = {
+  create?: Prisma.XOR<Prisma.ClassCreateWithoutReportCardsInput, Prisma.ClassUncheckedCreateWithoutReportCardsInput>
+  connectOrCreate?: Prisma.ClassCreateOrConnectWithoutReportCardsInput
+  connect?: Prisma.ClassWhereUniqueInput
+}
+
+export type ClassUpdateOneRequiredWithoutReportCardsNestedInput = {
+  create?: Prisma.XOR<Prisma.ClassCreateWithoutReportCardsInput, Prisma.ClassUncheckedCreateWithoutReportCardsInput>
+  connectOrCreate?: Prisma.ClassCreateOrConnectWithoutReportCardsInput
+  upsert?: Prisma.ClassUpsertWithoutReportCardsInput
+  connect?: Prisma.ClassWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ClassUpdateToOneWithWhereWithoutReportCardsInput, Prisma.ClassUpdateWithoutReportCardsInput>, Prisma.ClassUncheckedUpdateWithoutReportCardsInput>
+}
+
 export type ClassCreateWithoutSupervisorInput = {
   id: string
   name: string
   capacity: number
+  minCapacity?: number
+  maxCapacity?: number
   grade: number
+  whatsappLink?: string | null
   students?: Prisma.StudentCreateNestedManyWithoutClassInput
   lessons?: Prisma.LessonCreateNestedManyWithoutClassInput
   exams?: Prisma.ExamCreateNestedManyWithoutClassInput
   assignments?: Prisma.AssignmentCreateNestedManyWithoutClassInput
   results?: Prisma.ResultCreateNestedManyWithoutClassInput
+  evaluations?: Prisma.EvaluationCreateNestedManyWithoutClassInput
+  reportCards?: Prisma.ReportCardCreateNestedManyWithoutClassInput
 }
 
 export type ClassUncheckedCreateWithoutSupervisorInput = {
   id: string
   name: string
   capacity: number
+  minCapacity?: number
+  maxCapacity?: number
   grade: number
+  whatsappLink?: string | null
   students?: Prisma.StudentUncheckedCreateNestedManyWithoutClassInput
   lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutClassInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutClassInput
   assignments?: Prisma.AssignmentUncheckedCreateNestedManyWithoutClassInput
   results?: Prisma.ResultUncheckedCreateNestedManyWithoutClassInput
+  evaluations?: Prisma.EvaluationUncheckedCreateNestedManyWithoutClassInput
+  reportCards?: Prisma.ReportCardUncheckedCreateNestedManyWithoutClassInput
 }
 
 export type ClassCreateOrConnectWithoutSupervisorInput = {
@@ -582,32 +712,45 @@ export type ClassScalarWhereInput = {
   id?: Prisma.StringFilter<"Class"> | string
   name?: Prisma.StringFilter<"Class"> | string
   capacity?: Prisma.IntFilter<"Class"> | number
+  minCapacity?: Prisma.IntFilter<"Class"> | number
+  maxCapacity?: Prisma.IntFilter<"Class"> | number
   grade?: Prisma.IntFilter<"Class"> | number
   supervisorId?: Prisma.StringNullableFilter<"Class"> | string | null
+  whatsappLink?: Prisma.StringNullableFilter<"Class"> | string | null
 }
 
 export type ClassCreateWithoutStudentsInput = {
   id: string
   name: string
   capacity: number
+  minCapacity?: number
+  maxCapacity?: number
   grade: number
+  whatsappLink?: string | null
   supervisor?: Prisma.TeacherCreateNestedOneWithoutClassesInput
   lessons?: Prisma.LessonCreateNestedManyWithoutClassInput
   exams?: Prisma.ExamCreateNestedManyWithoutClassInput
   assignments?: Prisma.AssignmentCreateNestedManyWithoutClassInput
   results?: Prisma.ResultCreateNestedManyWithoutClassInput
+  evaluations?: Prisma.EvaluationCreateNestedManyWithoutClassInput
+  reportCards?: Prisma.ReportCardCreateNestedManyWithoutClassInput
 }
 
 export type ClassUncheckedCreateWithoutStudentsInput = {
   id: string
   name: string
   capacity: number
+  minCapacity?: number
+  maxCapacity?: number
   grade: number
   supervisorId?: string | null
+  whatsappLink?: string | null
   lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutClassInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutClassInput
   assignments?: Prisma.AssignmentUncheckedCreateNestedManyWithoutClassInput
   results?: Prisma.ResultUncheckedCreateNestedManyWithoutClassInput
+  evaluations?: Prisma.EvaluationUncheckedCreateNestedManyWithoutClassInput
+  reportCards?: Prisma.ReportCardUncheckedCreateNestedManyWithoutClassInput
 }
 
 export type ClassCreateOrConnectWithoutStudentsInput = {
@@ -630,48 +773,68 @@ export type ClassUpdateWithoutStudentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  minCapacity?: Prisma.IntFieldUpdateOperationsInput | number
+  maxCapacity?: Prisma.IntFieldUpdateOperationsInput | number
   grade?: Prisma.IntFieldUpdateOperationsInput | number
+  whatsappLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supervisor?: Prisma.TeacherUpdateOneWithoutClassesNestedInput
   lessons?: Prisma.LessonUpdateManyWithoutClassNestedInput
   exams?: Prisma.ExamUpdateManyWithoutClassNestedInput
   assignments?: Prisma.AssignmentUpdateManyWithoutClassNestedInput
   results?: Prisma.ResultUpdateManyWithoutClassNestedInput
+  evaluations?: Prisma.EvaluationUpdateManyWithoutClassNestedInput
+  reportCards?: Prisma.ReportCardUpdateManyWithoutClassNestedInput
 }
 
 export type ClassUncheckedUpdateWithoutStudentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  minCapacity?: Prisma.IntFieldUpdateOperationsInput | number
+  maxCapacity?: Prisma.IntFieldUpdateOperationsInput | number
   grade?: Prisma.IntFieldUpdateOperationsInput | number
   supervisorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lessons?: Prisma.LessonUncheckedUpdateManyWithoutClassNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutClassNestedInput
   assignments?: Prisma.AssignmentUncheckedUpdateManyWithoutClassNestedInput
   results?: Prisma.ResultUncheckedUpdateManyWithoutClassNestedInput
+  evaluations?: Prisma.EvaluationUncheckedUpdateManyWithoutClassNestedInput
+  reportCards?: Prisma.ReportCardUncheckedUpdateManyWithoutClassNestedInput
 }
 
 export type ClassCreateWithoutLessonsInput = {
   id: string
   name: string
   capacity: number
+  minCapacity?: number
+  maxCapacity?: number
   grade: number
+  whatsappLink?: string | null
   supervisor?: Prisma.TeacherCreateNestedOneWithoutClassesInput
   students?: Prisma.StudentCreateNestedManyWithoutClassInput
   exams?: Prisma.ExamCreateNestedManyWithoutClassInput
   assignments?: Prisma.AssignmentCreateNestedManyWithoutClassInput
   results?: Prisma.ResultCreateNestedManyWithoutClassInput
+  evaluations?: Prisma.EvaluationCreateNestedManyWithoutClassInput
+  reportCards?: Prisma.ReportCardCreateNestedManyWithoutClassInput
 }
 
 export type ClassUncheckedCreateWithoutLessonsInput = {
   id: string
   name: string
   capacity: number
+  minCapacity?: number
+  maxCapacity?: number
   grade: number
   supervisorId?: string | null
+  whatsappLink?: string | null
   students?: Prisma.StudentUncheckedCreateNestedManyWithoutClassInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutClassInput
   assignments?: Prisma.AssignmentUncheckedCreateNestedManyWithoutClassInput
   results?: Prisma.ResultUncheckedCreateNestedManyWithoutClassInput
+  evaluations?: Prisma.EvaluationUncheckedCreateNestedManyWithoutClassInput
+  reportCards?: Prisma.ReportCardUncheckedCreateNestedManyWithoutClassInput
 }
 
 export type ClassCreateOrConnectWithoutLessonsInput = {
@@ -694,48 +857,68 @@ export type ClassUpdateWithoutLessonsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  minCapacity?: Prisma.IntFieldUpdateOperationsInput | number
+  maxCapacity?: Prisma.IntFieldUpdateOperationsInput | number
   grade?: Prisma.IntFieldUpdateOperationsInput | number
+  whatsappLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supervisor?: Prisma.TeacherUpdateOneWithoutClassesNestedInput
   students?: Prisma.StudentUpdateManyWithoutClassNestedInput
   exams?: Prisma.ExamUpdateManyWithoutClassNestedInput
   assignments?: Prisma.AssignmentUpdateManyWithoutClassNestedInput
   results?: Prisma.ResultUpdateManyWithoutClassNestedInput
+  evaluations?: Prisma.EvaluationUpdateManyWithoutClassNestedInput
+  reportCards?: Prisma.ReportCardUpdateManyWithoutClassNestedInput
 }
 
 export type ClassUncheckedUpdateWithoutLessonsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  minCapacity?: Prisma.IntFieldUpdateOperationsInput | number
+  maxCapacity?: Prisma.IntFieldUpdateOperationsInput | number
   grade?: Prisma.IntFieldUpdateOperationsInput | number
   supervisorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   students?: Prisma.StudentUncheckedUpdateManyWithoutClassNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutClassNestedInput
   assignments?: Prisma.AssignmentUncheckedUpdateManyWithoutClassNestedInput
   results?: Prisma.ResultUncheckedUpdateManyWithoutClassNestedInput
+  evaluations?: Prisma.EvaluationUncheckedUpdateManyWithoutClassNestedInput
+  reportCards?: Prisma.ReportCardUncheckedUpdateManyWithoutClassNestedInput
 }
 
 export type ClassCreateWithoutExamsInput = {
   id: string
   name: string
   capacity: number
+  minCapacity?: number
+  maxCapacity?: number
   grade: number
+  whatsappLink?: string | null
   supervisor?: Prisma.TeacherCreateNestedOneWithoutClassesInput
   students?: Prisma.StudentCreateNestedManyWithoutClassInput
   lessons?: Prisma.LessonCreateNestedManyWithoutClassInput
   assignments?: Prisma.AssignmentCreateNestedManyWithoutClassInput
   results?: Prisma.ResultCreateNestedManyWithoutClassInput
+  evaluations?: Prisma.EvaluationCreateNestedManyWithoutClassInput
+  reportCards?: Prisma.ReportCardCreateNestedManyWithoutClassInput
 }
 
 export type ClassUncheckedCreateWithoutExamsInput = {
   id: string
   name: string
   capacity: number
+  minCapacity?: number
+  maxCapacity?: number
   grade: number
   supervisorId?: string | null
+  whatsappLink?: string | null
   students?: Prisma.StudentUncheckedCreateNestedManyWithoutClassInput
   lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutClassInput
   assignments?: Prisma.AssignmentUncheckedCreateNestedManyWithoutClassInput
   results?: Prisma.ResultUncheckedCreateNestedManyWithoutClassInput
+  evaluations?: Prisma.EvaluationUncheckedCreateNestedManyWithoutClassInput
+  reportCards?: Prisma.ReportCardUncheckedCreateNestedManyWithoutClassInput
 }
 
 export type ClassCreateOrConnectWithoutExamsInput = {
@@ -758,48 +941,68 @@ export type ClassUpdateWithoutExamsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  minCapacity?: Prisma.IntFieldUpdateOperationsInput | number
+  maxCapacity?: Prisma.IntFieldUpdateOperationsInput | number
   grade?: Prisma.IntFieldUpdateOperationsInput | number
+  whatsappLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supervisor?: Prisma.TeacherUpdateOneWithoutClassesNestedInput
   students?: Prisma.StudentUpdateManyWithoutClassNestedInput
   lessons?: Prisma.LessonUpdateManyWithoutClassNestedInput
   assignments?: Prisma.AssignmentUpdateManyWithoutClassNestedInput
   results?: Prisma.ResultUpdateManyWithoutClassNestedInput
+  evaluations?: Prisma.EvaluationUpdateManyWithoutClassNestedInput
+  reportCards?: Prisma.ReportCardUpdateManyWithoutClassNestedInput
 }
 
 export type ClassUncheckedUpdateWithoutExamsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  minCapacity?: Prisma.IntFieldUpdateOperationsInput | number
+  maxCapacity?: Prisma.IntFieldUpdateOperationsInput | number
   grade?: Prisma.IntFieldUpdateOperationsInput | number
   supervisorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   students?: Prisma.StudentUncheckedUpdateManyWithoutClassNestedInput
   lessons?: Prisma.LessonUncheckedUpdateManyWithoutClassNestedInput
   assignments?: Prisma.AssignmentUncheckedUpdateManyWithoutClassNestedInput
   results?: Prisma.ResultUncheckedUpdateManyWithoutClassNestedInput
+  evaluations?: Prisma.EvaluationUncheckedUpdateManyWithoutClassNestedInput
+  reportCards?: Prisma.ReportCardUncheckedUpdateManyWithoutClassNestedInput
 }
 
 export type ClassCreateWithoutAssignmentsInput = {
   id: string
   name: string
   capacity: number
+  minCapacity?: number
+  maxCapacity?: number
   grade: number
+  whatsappLink?: string | null
   supervisor?: Prisma.TeacherCreateNestedOneWithoutClassesInput
   students?: Prisma.StudentCreateNestedManyWithoutClassInput
   lessons?: Prisma.LessonCreateNestedManyWithoutClassInput
   exams?: Prisma.ExamCreateNestedManyWithoutClassInput
   results?: Prisma.ResultCreateNestedManyWithoutClassInput
+  evaluations?: Prisma.EvaluationCreateNestedManyWithoutClassInput
+  reportCards?: Prisma.ReportCardCreateNestedManyWithoutClassInput
 }
 
 export type ClassUncheckedCreateWithoutAssignmentsInput = {
   id: string
   name: string
   capacity: number
+  minCapacity?: number
+  maxCapacity?: number
   grade: number
   supervisorId?: string | null
+  whatsappLink?: string | null
   students?: Prisma.StudentUncheckedCreateNestedManyWithoutClassInput
   lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutClassInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutClassInput
   results?: Prisma.ResultUncheckedCreateNestedManyWithoutClassInput
+  evaluations?: Prisma.EvaluationUncheckedCreateNestedManyWithoutClassInput
+  reportCards?: Prisma.ReportCardUncheckedCreateNestedManyWithoutClassInput
 }
 
 export type ClassCreateOrConnectWithoutAssignmentsInput = {
@@ -822,48 +1025,68 @@ export type ClassUpdateWithoutAssignmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  minCapacity?: Prisma.IntFieldUpdateOperationsInput | number
+  maxCapacity?: Prisma.IntFieldUpdateOperationsInput | number
   grade?: Prisma.IntFieldUpdateOperationsInput | number
+  whatsappLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supervisor?: Prisma.TeacherUpdateOneWithoutClassesNestedInput
   students?: Prisma.StudentUpdateManyWithoutClassNestedInput
   lessons?: Prisma.LessonUpdateManyWithoutClassNestedInput
   exams?: Prisma.ExamUpdateManyWithoutClassNestedInput
   results?: Prisma.ResultUpdateManyWithoutClassNestedInput
+  evaluations?: Prisma.EvaluationUpdateManyWithoutClassNestedInput
+  reportCards?: Prisma.ReportCardUpdateManyWithoutClassNestedInput
 }
 
 export type ClassUncheckedUpdateWithoutAssignmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  minCapacity?: Prisma.IntFieldUpdateOperationsInput | number
+  maxCapacity?: Prisma.IntFieldUpdateOperationsInput | number
   grade?: Prisma.IntFieldUpdateOperationsInput | number
   supervisorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   students?: Prisma.StudentUncheckedUpdateManyWithoutClassNestedInput
   lessons?: Prisma.LessonUncheckedUpdateManyWithoutClassNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutClassNestedInput
   results?: Prisma.ResultUncheckedUpdateManyWithoutClassNestedInput
+  evaluations?: Prisma.EvaluationUncheckedUpdateManyWithoutClassNestedInput
+  reportCards?: Prisma.ReportCardUncheckedUpdateManyWithoutClassNestedInput
 }
 
 export type ClassCreateWithoutResultsInput = {
   id: string
   name: string
   capacity: number
+  minCapacity?: number
+  maxCapacity?: number
   grade: number
+  whatsappLink?: string | null
   supervisor?: Prisma.TeacherCreateNestedOneWithoutClassesInput
   students?: Prisma.StudentCreateNestedManyWithoutClassInput
   lessons?: Prisma.LessonCreateNestedManyWithoutClassInput
   exams?: Prisma.ExamCreateNestedManyWithoutClassInput
   assignments?: Prisma.AssignmentCreateNestedManyWithoutClassInput
+  evaluations?: Prisma.EvaluationCreateNestedManyWithoutClassInput
+  reportCards?: Prisma.ReportCardCreateNestedManyWithoutClassInput
 }
 
 export type ClassUncheckedCreateWithoutResultsInput = {
   id: string
   name: string
   capacity: number
+  minCapacity?: number
+  maxCapacity?: number
   grade: number
   supervisorId?: string | null
+  whatsappLink?: string | null
   students?: Prisma.StudentUncheckedCreateNestedManyWithoutClassInput
   lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutClassInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutClassInput
   assignments?: Prisma.AssignmentUncheckedCreateNestedManyWithoutClassInput
+  evaluations?: Prisma.EvaluationUncheckedCreateNestedManyWithoutClassInput
+  reportCards?: Prisma.ReportCardUncheckedCreateNestedManyWithoutClassInput
 }
 
 export type ClassCreateOrConnectWithoutResultsInput = {
@@ -886,62 +1109,256 @@ export type ClassUpdateWithoutResultsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  minCapacity?: Prisma.IntFieldUpdateOperationsInput | number
+  maxCapacity?: Prisma.IntFieldUpdateOperationsInput | number
   grade?: Prisma.IntFieldUpdateOperationsInput | number
+  whatsappLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supervisor?: Prisma.TeacherUpdateOneWithoutClassesNestedInput
   students?: Prisma.StudentUpdateManyWithoutClassNestedInput
   lessons?: Prisma.LessonUpdateManyWithoutClassNestedInput
   exams?: Prisma.ExamUpdateManyWithoutClassNestedInput
   assignments?: Prisma.AssignmentUpdateManyWithoutClassNestedInput
+  evaluations?: Prisma.EvaluationUpdateManyWithoutClassNestedInput
+  reportCards?: Prisma.ReportCardUpdateManyWithoutClassNestedInput
 }
 
 export type ClassUncheckedUpdateWithoutResultsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  minCapacity?: Prisma.IntFieldUpdateOperationsInput | number
+  maxCapacity?: Prisma.IntFieldUpdateOperationsInput | number
   grade?: Prisma.IntFieldUpdateOperationsInput | number
   supervisorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   students?: Prisma.StudentUncheckedUpdateManyWithoutClassNestedInput
   lessons?: Prisma.LessonUncheckedUpdateManyWithoutClassNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutClassNestedInput
   assignments?: Prisma.AssignmentUncheckedUpdateManyWithoutClassNestedInput
+  evaluations?: Prisma.EvaluationUncheckedUpdateManyWithoutClassNestedInput
+  reportCards?: Prisma.ReportCardUncheckedUpdateManyWithoutClassNestedInput
+}
+
+export type ClassCreateWithoutEvaluationsInput = {
+  id: string
+  name: string
+  capacity: number
+  minCapacity?: number
+  maxCapacity?: number
+  grade: number
+  whatsappLink?: string | null
+  supervisor?: Prisma.TeacherCreateNestedOneWithoutClassesInput
+  students?: Prisma.StudentCreateNestedManyWithoutClassInput
+  lessons?: Prisma.LessonCreateNestedManyWithoutClassInput
+  exams?: Prisma.ExamCreateNestedManyWithoutClassInput
+  assignments?: Prisma.AssignmentCreateNestedManyWithoutClassInput
+  results?: Prisma.ResultCreateNestedManyWithoutClassInput
+  reportCards?: Prisma.ReportCardCreateNestedManyWithoutClassInput
+}
+
+export type ClassUncheckedCreateWithoutEvaluationsInput = {
+  id: string
+  name: string
+  capacity: number
+  minCapacity?: number
+  maxCapacity?: number
+  grade: number
+  supervisorId?: string | null
+  whatsappLink?: string | null
+  students?: Prisma.StudentUncheckedCreateNestedManyWithoutClassInput
+  lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutClassInput
+  exams?: Prisma.ExamUncheckedCreateNestedManyWithoutClassInput
+  assignments?: Prisma.AssignmentUncheckedCreateNestedManyWithoutClassInput
+  results?: Prisma.ResultUncheckedCreateNestedManyWithoutClassInput
+  reportCards?: Prisma.ReportCardUncheckedCreateNestedManyWithoutClassInput
+}
+
+export type ClassCreateOrConnectWithoutEvaluationsInput = {
+  where: Prisma.ClassWhereUniqueInput
+  create: Prisma.XOR<Prisma.ClassCreateWithoutEvaluationsInput, Prisma.ClassUncheckedCreateWithoutEvaluationsInput>
+}
+
+export type ClassUpsertWithoutEvaluationsInput = {
+  update: Prisma.XOR<Prisma.ClassUpdateWithoutEvaluationsInput, Prisma.ClassUncheckedUpdateWithoutEvaluationsInput>
+  create: Prisma.XOR<Prisma.ClassCreateWithoutEvaluationsInput, Prisma.ClassUncheckedCreateWithoutEvaluationsInput>
+  where?: Prisma.ClassWhereInput
+}
+
+export type ClassUpdateToOneWithWhereWithoutEvaluationsInput = {
+  where?: Prisma.ClassWhereInput
+  data: Prisma.XOR<Prisma.ClassUpdateWithoutEvaluationsInput, Prisma.ClassUncheckedUpdateWithoutEvaluationsInput>
+}
+
+export type ClassUpdateWithoutEvaluationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  minCapacity?: Prisma.IntFieldUpdateOperationsInput | number
+  maxCapacity?: Prisma.IntFieldUpdateOperationsInput | number
+  grade?: Prisma.IntFieldUpdateOperationsInput | number
+  whatsappLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supervisor?: Prisma.TeacherUpdateOneWithoutClassesNestedInput
+  students?: Prisma.StudentUpdateManyWithoutClassNestedInput
+  lessons?: Prisma.LessonUpdateManyWithoutClassNestedInput
+  exams?: Prisma.ExamUpdateManyWithoutClassNestedInput
+  assignments?: Prisma.AssignmentUpdateManyWithoutClassNestedInput
+  results?: Prisma.ResultUpdateManyWithoutClassNestedInput
+  reportCards?: Prisma.ReportCardUpdateManyWithoutClassNestedInput
+}
+
+export type ClassUncheckedUpdateWithoutEvaluationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  minCapacity?: Prisma.IntFieldUpdateOperationsInput | number
+  maxCapacity?: Prisma.IntFieldUpdateOperationsInput | number
+  grade?: Prisma.IntFieldUpdateOperationsInput | number
+  supervisorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  students?: Prisma.StudentUncheckedUpdateManyWithoutClassNestedInput
+  lessons?: Prisma.LessonUncheckedUpdateManyWithoutClassNestedInput
+  exams?: Prisma.ExamUncheckedUpdateManyWithoutClassNestedInput
+  assignments?: Prisma.AssignmentUncheckedUpdateManyWithoutClassNestedInput
+  results?: Prisma.ResultUncheckedUpdateManyWithoutClassNestedInput
+  reportCards?: Prisma.ReportCardUncheckedUpdateManyWithoutClassNestedInput
+}
+
+export type ClassCreateWithoutReportCardsInput = {
+  id: string
+  name: string
+  capacity: number
+  minCapacity?: number
+  maxCapacity?: number
+  grade: number
+  whatsappLink?: string | null
+  supervisor?: Prisma.TeacherCreateNestedOneWithoutClassesInput
+  students?: Prisma.StudentCreateNestedManyWithoutClassInput
+  lessons?: Prisma.LessonCreateNestedManyWithoutClassInput
+  exams?: Prisma.ExamCreateNestedManyWithoutClassInput
+  assignments?: Prisma.AssignmentCreateNestedManyWithoutClassInput
+  results?: Prisma.ResultCreateNestedManyWithoutClassInput
+  evaluations?: Prisma.EvaluationCreateNestedManyWithoutClassInput
+}
+
+export type ClassUncheckedCreateWithoutReportCardsInput = {
+  id: string
+  name: string
+  capacity: number
+  minCapacity?: number
+  maxCapacity?: number
+  grade: number
+  supervisorId?: string | null
+  whatsappLink?: string | null
+  students?: Prisma.StudentUncheckedCreateNestedManyWithoutClassInput
+  lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutClassInput
+  exams?: Prisma.ExamUncheckedCreateNestedManyWithoutClassInput
+  assignments?: Prisma.AssignmentUncheckedCreateNestedManyWithoutClassInput
+  results?: Prisma.ResultUncheckedCreateNestedManyWithoutClassInput
+  evaluations?: Prisma.EvaluationUncheckedCreateNestedManyWithoutClassInput
+}
+
+export type ClassCreateOrConnectWithoutReportCardsInput = {
+  where: Prisma.ClassWhereUniqueInput
+  create: Prisma.XOR<Prisma.ClassCreateWithoutReportCardsInput, Prisma.ClassUncheckedCreateWithoutReportCardsInput>
+}
+
+export type ClassUpsertWithoutReportCardsInput = {
+  update: Prisma.XOR<Prisma.ClassUpdateWithoutReportCardsInput, Prisma.ClassUncheckedUpdateWithoutReportCardsInput>
+  create: Prisma.XOR<Prisma.ClassCreateWithoutReportCardsInput, Prisma.ClassUncheckedCreateWithoutReportCardsInput>
+  where?: Prisma.ClassWhereInput
+}
+
+export type ClassUpdateToOneWithWhereWithoutReportCardsInput = {
+  where?: Prisma.ClassWhereInput
+  data: Prisma.XOR<Prisma.ClassUpdateWithoutReportCardsInput, Prisma.ClassUncheckedUpdateWithoutReportCardsInput>
+}
+
+export type ClassUpdateWithoutReportCardsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  minCapacity?: Prisma.IntFieldUpdateOperationsInput | number
+  maxCapacity?: Prisma.IntFieldUpdateOperationsInput | number
+  grade?: Prisma.IntFieldUpdateOperationsInput | number
+  whatsappLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supervisor?: Prisma.TeacherUpdateOneWithoutClassesNestedInput
+  students?: Prisma.StudentUpdateManyWithoutClassNestedInput
+  lessons?: Prisma.LessonUpdateManyWithoutClassNestedInput
+  exams?: Prisma.ExamUpdateManyWithoutClassNestedInput
+  assignments?: Prisma.AssignmentUpdateManyWithoutClassNestedInput
+  results?: Prisma.ResultUpdateManyWithoutClassNestedInput
+  evaluations?: Prisma.EvaluationUpdateManyWithoutClassNestedInput
+}
+
+export type ClassUncheckedUpdateWithoutReportCardsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  minCapacity?: Prisma.IntFieldUpdateOperationsInput | number
+  maxCapacity?: Prisma.IntFieldUpdateOperationsInput | number
+  grade?: Prisma.IntFieldUpdateOperationsInput | number
+  supervisorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  students?: Prisma.StudentUncheckedUpdateManyWithoutClassNestedInput
+  lessons?: Prisma.LessonUncheckedUpdateManyWithoutClassNestedInput
+  exams?: Prisma.ExamUncheckedUpdateManyWithoutClassNestedInput
+  assignments?: Prisma.AssignmentUncheckedUpdateManyWithoutClassNestedInput
+  results?: Prisma.ResultUncheckedUpdateManyWithoutClassNestedInput
+  evaluations?: Prisma.EvaluationUncheckedUpdateManyWithoutClassNestedInput
 }
 
 export type ClassCreateManySupervisorInput = {
   id: string
   name: string
   capacity: number
+  minCapacity?: number
+  maxCapacity?: number
   grade: number
+  whatsappLink?: string | null
 }
 
 export type ClassUpdateWithoutSupervisorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  minCapacity?: Prisma.IntFieldUpdateOperationsInput | number
+  maxCapacity?: Prisma.IntFieldUpdateOperationsInput | number
   grade?: Prisma.IntFieldUpdateOperationsInput | number
+  whatsappLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   students?: Prisma.StudentUpdateManyWithoutClassNestedInput
   lessons?: Prisma.LessonUpdateManyWithoutClassNestedInput
   exams?: Prisma.ExamUpdateManyWithoutClassNestedInput
   assignments?: Prisma.AssignmentUpdateManyWithoutClassNestedInput
   results?: Prisma.ResultUpdateManyWithoutClassNestedInput
+  evaluations?: Prisma.EvaluationUpdateManyWithoutClassNestedInput
+  reportCards?: Prisma.ReportCardUpdateManyWithoutClassNestedInput
 }
 
 export type ClassUncheckedUpdateWithoutSupervisorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  minCapacity?: Prisma.IntFieldUpdateOperationsInput | number
+  maxCapacity?: Prisma.IntFieldUpdateOperationsInput | number
   grade?: Prisma.IntFieldUpdateOperationsInput | number
+  whatsappLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   students?: Prisma.StudentUncheckedUpdateManyWithoutClassNestedInput
   lessons?: Prisma.LessonUncheckedUpdateManyWithoutClassNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutClassNestedInput
   assignments?: Prisma.AssignmentUncheckedUpdateManyWithoutClassNestedInput
   results?: Prisma.ResultUncheckedUpdateManyWithoutClassNestedInput
+  evaluations?: Prisma.EvaluationUncheckedUpdateManyWithoutClassNestedInput
+  reportCards?: Prisma.ReportCardUncheckedUpdateManyWithoutClassNestedInput
 }
 
 export type ClassUncheckedUpdateManyWithoutSupervisorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  minCapacity?: Prisma.IntFieldUpdateOperationsInput | number
+  maxCapacity?: Prisma.IntFieldUpdateOperationsInput | number
   grade?: Prisma.IntFieldUpdateOperationsInput | number
+  whatsappLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -955,6 +1372,8 @@ export type ClassCountOutputType = {
   exams: number
   assignments: number
   results: number
+  evaluations: number
+  reportCards: number
 }
 
 export type ClassCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -963,6 +1382,8 @@ export type ClassCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.
   exams?: boolean | ClassCountOutputTypeCountExamsArgs
   assignments?: boolean | ClassCountOutputTypeCountAssignmentsArgs
   results?: boolean | ClassCountOutputTypeCountResultsArgs
+  evaluations?: boolean | ClassCountOutputTypeCountEvaluationsArgs
+  reportCards?: boolean | ClassCountOutputTypeCountReportCardsArgs
 }
 
 /**
@@ -1010,19 +1431,38 @@ export type ClassCountOutputTypeCountResultsArgs<ExtArgs extends runtime.Types.E
   where?: Prisma.ResultWhereInput
 }
 
+/**
+ * ClassCountOutputType without action
+ */
+export type ClassCountOutputTypeCountEvaluationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.EvaluationWhereInput
+}
+
+/**
+ * ClassCountOutputType without action
+ */
+export type ClassCountOutputTypeCountReportCardsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ReportCardWhereInput
+}
+
 
 export type ClassSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
   capacity?: boolean
+  minCapacity?: boolean
+  maxCapacity?: boolean
   grade?: boolean
   supervisorId?: boolean
+  whatsappLink?: boolean
   supervisor?: boolean | Prisma.Class$supervisorArgs<ExtArgs>
   students?: boolean | Prisma.Class$studentsArgs<ExtArgs>
   lessons?: boolean | Prisma.Class$lessonsArgs<ExtArgs>
   exams?: boolean | Prisma.Class$examsArgs<ExtArgs>
   assignments?: boolean | Prisma.Class$assignmentsArgs<ExtArgs>
   results?: boolean | Prisma.Class$resultsArgs<ExtArgs>
+  evaluations?: boolean | Prisma.Class$evaluationsArgs<ExtArgs>
+  reportCards?: boolean | Prisma.Class$reportCardsArgs<ExtArgs>
   _count?: boolean | Prisma.ClassCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["class"]>
 
@@ -1030,8 +1470,11 @@ export type ClassSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   id?: boolean
   name?: boolean
   capacity?: boolean
+  minCapacity?: boolean
+  maxCapacity?: boolean
   grade?: boolean
   supervisorId?: boolean
+  whatsappLink?: boolean
   supervisor?: boolean | Prisma.Class$supervisorArgs<ExtArgs>
 }, ExtArgs["result"]["class"]>
 
@@ -1039,8 +1482,11 @@ export type ClassSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   id?: boolean
   name?: boolean
   capacity?: boolean
+  minCapacity?: boolean
+  maxCapacity?: boolean
   grade?: boolean
   supervisorId?: boolean
+  whatsappLink?: boolean
   supervisor?: boolean | Prisma.Class$supervisorArgs<ExtArgs>
 }, ExtArgs["result"]["class"]>
 
@@ -1048,11 +1494,14 @@ export type ClassSelectScalar = {
   id?: boolean
   name?: boolean
   capacity?: boolean
+  minCapacity?: boolean
+  maxCapacity?: boolean
   grade?: boolean
   supervisorId?: boolean
+  whatsappLink?: boolean
 }
 
-export type ClassOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "capacity" | "grade" | "supervisorId", ExtArgs["result"]["class"]>
+export type ClassOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "capacity" | "minCapacity" | "maxCapacity" | "grade" | "supervisorId" | "whatsappLink", ExtArgs["result"]["class"]>
 export type ClassInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   supervisor?: boolean | Prisma.Class$supervisorArgs<ExtArgs>
   students?: boolean | Prisma.Class$studentsArgs<ExtArgs>
@@ -1060,6 +1509,8 @@ export type ClassInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   exams?: boolean | Prisma.Class$examsArgs<ExtArgs>
   assignments?: boolean | Prisma.Class$assignmentsArgs<ExtArgs>
   results?: boolean | Prisma.Class$resultsArgs<ExtArgs>
+  evaluations?: boolean | Prisma.Class$evaluationsArgs<ExtArgs>
+  reportCards?: boolean | Prisma.Class$reportCardsArgs<ExtArgs>
   _count?: boolean | Prisma.ClassCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ClassIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1078,13 +1529,18 @@ export type $ClassPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     exams: Prisma.$ExamPayload<ExtArgs>[]
     assignments: Prisma.$AssignmentPayload<ExtArgs>[]
     results: Prisma.$ResultPayload<ExtArgs>[]
+    evaluations: Prisma.$EvaluationPayload<ExtArgs>[]
+    reportCards: Prisma.$ReportCardPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
     capacity: number
+    minCapacity: number
+    maxCapacity: number
     grade: number
     supervisorId: string | null
+    whatsappLink: string | null
   }, ExtArgs["result"]["class"]>
   composites: {}
 }
@@ -1485,6 +1941,8 @@ export interface Prisma__ClassClient<T, Null = never, ExtArgs extends runtime.Ty
   exams<T extends Prisma.Class$examsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Class$examsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   assignments<T extends Prisma.Class$assignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Class$assignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   results<T extends Prisma.Class$resultsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Class$resultsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ResultPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  evaluations<T extends Prisma.Class$evaluationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Class$evaluationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EvaluationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  reportCards<T extends Prisma.Class$reportCardsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Class$reportCardsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReportCardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1517,8 +1975,11 @@ export interface ClassFieldRefs {
   readonly id: Prisma.FieldRef<"Class", 'String'>
   readonly name: Prisma.FieldRef<"Class", 'String'>
   readonly capacity: Prisma.FieldRef<"Class", 'Int'>
+  readonly minCapacity: Prisma.FieldRef<"Class", 'Int'>
+  readonly maxCapacity: Prisma.FieldRef<"Class", 'Int'>
   readonly grade: Prisma.FieldRef<"Class", 'Int'>
   readonly supervisorId: Prisma.FieldRef<"Class", 'String'>
+  readonly whatsappLink: Prisma.FieldRef<"Class", 'String'>
 }
     
 
@@ -2054,6 +2515,54 @@ export type Class$resultsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.ResultScalarFieldEnum | Prisma.ResultScalarFieldEnum[]
+}
+
+/**
+ * Class.evaluations
+ */
+export type Class$evaluationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Evaluation
+   */
+  select?: Prisma.EvaluationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Evaluation
+   */
+  omit?: Prisma.EvaluationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EvaluationInclude<ExtArgs> | null
+  where?: Prisma.EvaluationWhereInput
+  orderBy?: Prisma.EvaluationOrderByWithRelationInput | Prisma.EvaluationOrderByWithRelationInput[]
+  cursor?: Prisma.EvaluationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.EvaluationScalarFieldEnum | Prisma.EvaluationScalarFieldEnum[]
+}
+
+/**
+ * Class.reportCards
+ */
+export type Class$reportCardsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ReportCard
+   */
+  select?: Prisma.ReportCardSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ReportCard
+   */
+  omit?: Prisma.ReportCardOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReportCardInclude<ExtArgs> | null
+  where?: Prisma.ReportCardWhereInput
+  orderBy?: Prisma.ReportCardOrderByWithRelationInput | Prisma.ReportCardOrderByWithRelationInput[]
+  cursor?: Prisma.ReportCardWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ReportCardScalarFieldEnum | Prisma.ReportCardScalarFieldEnum[]
 }
 
 /**

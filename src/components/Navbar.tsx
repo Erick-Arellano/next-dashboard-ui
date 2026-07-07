@@ -1,30 +1,98 @@
-import Image from "next/image"
+import { getSession } from "@/lib/session";
+import prisma from "@/lib/prisma";
+import Image from "next/image";
+import NavbarGreeting from "./NavbarGreeting";
 
-const Navbar = () => {
+const Navbar = async () => {
+  const { role, teacherId } = await getSession();
+  
+  let name = "Usuario Vocali";
+  let displayRole = "Invitado";
+  let photo = "/avatar.png";
+
+  try {
+    if (role === "admin") {
+      name = "Ade";
+      displayRole = "Administrador";
+      photo = "/avatar.png";
+
+      // Load admin avatar from local configuration file if it exists
+      const fs = await import("fs");
+      const path = await import("path");
+      const adminPath = path.join(process.cwd(), "adminProfile.json");
+      if (fs.existsSync(adminPath)) {
+        try {
+          const raw = fs.readFileSync(adminPath, "utf-8");
+          const adminData = JSON.parse(raw);
+          if (adminData.name) {
+            name = adminData.name.split(" ")[0]; // Get first name for friendly greeting
+          }
+          if (adminData.photo) {
+            photo = adminData.photo;
+          }
+        } catch (e) {
+          console.error("Error reading admin profile in Navbar:", e);
+        }
+      }
+    } else if (role === "teacher" && teacherId) {
+      const teacher = await prisma.teacher.findUnique({
+        where: { id: teacherId },
+        select: { name: true, photo: true }
+      });
+      if (teacher) {
+        name = teacher.name.split(" ")[0];
+        displayRole = "Profesor";
+        if (teacher.photo) {
+          photo = teacher.photo;
+        }
+      }
+    } else if (role === "student" && teacherId) {
+      const student = await prisma.student.findUnique({
+        where: { id: teacherId },
+        select: { name: true, photo: true }
+      });
+      if (student) {
+        name = student.name.split(" ")[0];
+        displayRole = "Alumno";
+        if (student.photo) {
+          photo = student.photo;
+        }
+      }
+    } else if (role === "parent" && teacherId) {
+      const student = await prisma.student.findUnique({
+        where: { id: teacherId },
+        select: { name: true, photo: true }
+      });
+      if (student) {
+        name = `Tutor de ${student.name.split(" ")[0]}`;
+        displayRole = "Tutor";
+        if (student.photo) {
+          photo = student.photo;
+        }
+      }
+    }
+  } catch (err) {
+    console.error("Error fetching navbar details:", err);
+  }
+
   return (
-    <div className='flex items-center justify-between p-4'>
-      {/* SEARCH BAR */}
-      <div className='hidden md:flex items-center gap-2 text-xs rounded-full ring-[1.5px] ring-gray-300 px-2'>
-        <Image src="/search.png" alt="" width={14} height={14}/>
-        <input type="text" placeholder="Buscar..." className="w-[200px] p-2 bg-transparent outline-none"/>
+    <div className='flex items-center justify-end p-4 gap-4 print:hidden'>
+      {/* USER INFO */}
+      <div className='flex flex-col text-right select-none'>
+        <NavbarGreeting name={name} />
+        <span className="text-[9px] font-extrabold text-slate-400 mt-1 uppercase tracking-wider">{displayRole}</span>
       </div>
-      {/* ICONS AND USER */}
-      <div className='flex items-center gap-6 justify-end w-full'>
-        <div className='bg-white rounded-full w-7 h-7 flex items-center justify-center cursor-pointer'>
-          <Image src="/message.png" alt="" width={20} height={20}/>
-        </div>
-        <div className='bg-white rounded-full w-7 h-7 flex items-center justify-center cursor-pointer relative'>
-          <Image src="/announcement.png" alt="" width={20} height={20}/>
-          <div className='absolute -top-3 -right-3 w-5 h-5 flex items-center justify-center bg-purple-500 text-white rounded-full text-xs'>1</div>
-        </div>
-        <div className='flex flex-col'>
-          <span className="text-xs leading-3 font-medium">Ade</span>
-          <span className="text-[10px] text-gray-500 text-right">Administrador</span>
-        </div>
-        <Image src="/avatar.png" alt="" width={36} height={36} className="rounded-full"/>
+      <div className="w-9 h-9 rounded-full overflow-hidden relative border border-slate-100 shadow-sm flex items-center justify-center bg-slate-100">
+        <Image 
+          src={photo} 
+          alt="Avatar" 
+          width={36} 
+          height={36} 
+          className="object-cover w-full h-full"
+        />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

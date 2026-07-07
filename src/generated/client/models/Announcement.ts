@@ -37,6 +37,7 @@ export type AnnouncementSumAggregateOutputType = {
 export type AnnouncementMinAggregateOutputType = {
   id: number | null
   title: string | null
+  description: string | null
   classId: string | null
   date: Date | null
 }
@@ -44,6 +45,7 @@ export type AnnouncementMinAggregateOutputType = {
 export type AnnouncementMaxAggregateOutputType = {
   id: number | null
   title: string | null
+  description: string | null
   classId: string | null
   date: Date | null
 }
@@ -51,6 +53,7 @@ export type AnnouncementMaxAggregateOutputType = {
 export type AnnouncementCountAggregateOutputType = {
   id: number
   title: number
+  description: number
   classId: number
   date: number
   _all: number
@@ -68,6 +71,7 @@ export type AnnouncementSumAggregateInputType = {
 export type AnnouncementMinAggregateInputType = {
   id?: true
   title?: true
+  description?: true
   classId?: true
   date?: true
 }
@@ -75,6 +79,7 @@ export type AnnouncementMinAggregateInputType = {
 export type AnnouncementMaxAggregateInputType = {
   id?: true
   title?: true
+  description?: true
   classId?: true
   date?: true
 }
@@ -82,6 +87,7 @@ export type AnnouncementMaxAggregateInputType = {
 export type AnnouncementCountAggregateInputType = {
   id?: true
   title?: true
+  description?: true
   classId?: true
   date?: true
   _all?: true
@@ -176,6 +182,7 @@ export type AnnouncementGroupByArgs<ExtArgs extends runtime.Types.Extensions.Int
 export type AnnouncementGroupByOutputType = {
   id: number
   title: string
+  description: string
   classId: string | null
   date: Date
   _count: AnnouncementCountAggregateOutputType | null
@@ -206,6 +213,7 @@ export type AnnouncementWhereInput = {
   NOT?: Prisma.AnnouncementWhereInput | Prisma.AnnouncementWhereInput[]
   id?: Prisma.IntFilter<"Announcement"> | number
   title?: Prisma.StringFilter<"Announcement"> | string
+  description?: Prisma.StringFilter<"Announcement"> | string
   classId?: Prisma.StringNullableFilter<"Announcement"> | string | null
   date?: Prisma.DateTimeFilter<"Announcement"> | Date | string
 }
@@ -213,6 +221,7 @@ export type AnnouncementWhereInput = {
 export type AnnouncementOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   classId?: Prisma.SortOrderInput | Prisma.SortOrder
   date?: Prisma.SortOrder
 }
@@ -223,6 +232,7 @@ export type AnnouncementWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.AnnouncementWhereInput[]
   NOT?: Prisma.AnnouncementWhereInput | Prisma.AnnouncementWhereInput[]
   title?: Prisma.StringFilter<"Announcement"> | string
+  description?: Prisma.StringFilter<"Announcement"> | string
   classId?: Prisma.StringNullableFilter<"Announcement"> | string | null
   date?: Prisma.DateTimeFilter<"Announcement"> | Date | string
 }, "id">
@@ -230,6 +240,7 @@ export type AnnouncementWhereUniqueInput = Prisma.AtLeast<{
 export type AnnouncementOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   classId?: Prisma.SortOrderInput | Prisma.SortOrder
   date?: Prisma.SortOrder
   _count?: Prisma.AnnouncementCountOrderByAggregateInput
@@ -245,12 +256,14 @@ export type AnnouncementScalarWhereWithAggregatesInput = {
   NOT?: Prisma.AnnouncementScalarWhereWithAggregatesInput | Prisma.AnnouncementScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Announcement"> | number
   title?: Prisma.StringWithAggregatesFilter<"Announcement"> | string
+  description?: Prisma.StringWithAggregatesFilter<"Announcement"> | string
   classId?: Prisma.StringNullableWithAggregatesFilter<"Announcement"> | string | null
   date?: Prisma.DateTimeWithAggregatesFilter<"Announcement"> | Date | string
 }
 
 export type AnnouncementCreateInput = {
   title: string
+  description?: string
   classId?: string | null
   date: Date | string
 }
@@ -258,12 +271,14 @@ export type AnnouncementCreateInput = {
 export type AnnouncementUncheckedCreateInput = {
   id?: number
   title: string
+  description?: string
   classId?: string | null
   date: Date | string
 }
 
 export type AnnouncementUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   classId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -271,6 +286,7 @@ export type AnnouncementUpdateInput = {
 export type AnnouncementUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   classId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -278,12 +294,14 @@ export type AnnouncementUncheckedUpdateInput = {
 export type AnnouncementCreateManyInput = {
   id?: number
   title: string
+  description?: string
   classId?: string | null
   date: Date | string
 }
 
 export type AnnouncementUpdateManyMutationInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   classId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -291,6 +309,7 @@ export type AnnouncementUpdateManyMutationInput = {
 export type AnnouncementUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   classId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -298,6 +317,7 @@ export type AnnouncementUncheckedUpdateManyInput = {
 export type AnnouncementCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   classId?: Prisma.SortOrder
   date?: Prisma.SortOrder
 }
@@ -309,6 +329,7 @@ export type AnnouncementAvgOrderByAggregateInput = {
 export type AnnouncementMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   classId?: Prisma.SortOrder
   date?: Prisma.SortOrder
 }
@@ -316,6 +337,7 @@ export type AnnouncementMaxOrderByAggregateInput = {
 export type AnnouncementMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   classId?: Prisma.SortOrder
   date?: Prisma.SortOrder
 }
@@ -329,6 +351,7 @@ export type AnnouncementSumOrderByAggregateInput = {
 export type AnnouncementSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   title?: boolean
+  description?: boolean
   classId?: boolean
   date?: boolean
 }, ExtArgs["result"]["announcement"]>
@@ -336,6 +359,7 @@ export type AnnouncementSelect<ExtArgs extends runtime.Types.Extensions.Internal
 export type AnnouncementSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   title?: boolean
+  description?: boolean
   classId?: boolean
   date?: boolean
 }, ExtArgs["result"]["announcement"]>
@@ -343,6 +367,7 @@ export type AnnouncementSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
 export type AnnouncementSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   title?: boolean
+  description?: boolean
   classId?: boolean
   date?: boolean
 }, ExtArgs["result"]["announcement"]>
@@ -350,11 +375,12 @@ export type AnnouncementSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
 export type AnnouncementSelectScalar = {
   id?: boolean
   title?: boolean
+  description?: boolean
   classId?: boolean
   date?: boolean
 }
 
-export type AnnouncementOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "classId" | "date", ExtArgs["result"]["announcement"]>
+export type AnnouncementOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "classId" | "date", ExtArgs["result"]["announcement"]>
 
 export type $AnnouncementPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Announcement"
@@ -362,6 +388,7 @@ export type $AnnouncementPayload<ExtArgs extends runtime.Types.Extensions.Intern
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     title: string
+    description: string
     classId: string | null
     date: Date
   }, ExtArgs["result"]["announcement"]>
@@ -789,6 +816,7 @@ export interface Prisma__AnnouncementClient<T, Null = never, ExtArgs extends run
 export interface AnnouncementFieldRefs {
   readonly id: Prisma.FieldRef<"Announcement", 'Int'>
   readonly title: Prisma.FieldRef<"Announcement", 'String'>
+  readonly description: Prisma.FieldRef<"Announcement", 'String'>
   readonly classId: Prisma.FieldRef<"Announcement", 'String'>
   readonly date: Prisma.FieldRef<"Announcement", 'DateTime'>
 }

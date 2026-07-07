@@ -4,7 +4,7 @@ import FormModal from "@/components/FormModal";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
-import { role } from "@/lib/data";
+import { getSession } from "@/lib/session";
 import prisma from "@/lib/prisma";
 import Image from "next/image";
 
@@ -35,14 +35,44 @@ const columns = [
   },
 ];
 
-const LessonListPage = async () => {
-  const lessonsData = await prisma.lesson.findMany({
-    include: {
-      subject: { select: { name: true } },
-      class: { select: { name: true } },
-      teacher: { select: { name: true } },
-    },
-  });
+const LessonListPage = async ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | undefined };
+}) => {
+  const { role } = await getSession();
+  const { classId, teacherId, search, page } = searchParams;
+  const p = page ? parseInt(page, 10) : 1;
+  const ITEM_LIMIT = 10;
+
+  const where: any = {};
+  if (classId) {
+    where.classId = classId;
+  }
+  if (teacherId) {
+    where.teacherId = teacherId;
+  }
+  if (search) {
+    where.OR = [
+      { subject: { name: { contains: search } } },
+      { teacher: { name: { contains: search } } },
+      { class: { name: { contains: search } } },
+    ];
+  }
+
+  const [lessonsData, count] = await prisma.$transaction([
+    prisma.lesson.findMany({
+      where,
+      include: {
+        subject: { select: { name: true } },
+        class: { select: { name: true } },
+        teacher: { select: { name: true } },
+      },
+      skip: ITEM_LIMIT * (p - 1),
+      take: ITEM_LIMIT,
+    }),
+    prisma.lesson.count({ where }),
+  ]);
 
   const renderRow = (item: Lesson) => (
     <tr
@@ -69,7 +99,7 @@ const LessonListPage = async () => {
     <div className="bg-white p-4 rounded-md flex-1 m-4 mt-0">
       {/* TOP */}
       <div className="flex items-center justify-between">
-        <h1 className="hidden md:block text-lg font-semibold">Todas las Lecciones</h1>
+        <h1 className="hidden md:block text-lg font-semibold">Todos los Cursos</h1>
         <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
           <TableSearch />
           <div className="flex items-center gap-4 self-end">
@@ -86,7 +116,7 @@ const LessonListPage = async () => {
       {/* LIST */}
       <Table columns={columns} renderRow={renderRow} data={lessonsData} />
       {/* PAGINATION */}
-      <Pagination />
+      <Pagination page={p} count={count} />
     </div>
   );
 };
